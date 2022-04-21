@@ -1,3 +1,5 @@
 from django.contrib import admin
+from .models import Centro,Sucursal
 
-# Register your models here.
+admin.site.register(Centro)
+admin.site.register(Sucursal)
