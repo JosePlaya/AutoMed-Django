@@ -75,11 +75,12 @@ class Usuario(models.Model):
     aMaternoUsuario = models.CharField(max_length=30, verbose_name="aPaterno_Usuario")
     telefonoUsuario = models.IntegerField(max_length=30, verbose_name="Telefono_Usuario")
     correoUsuario = models.CharField(max_length=30, verbose_name="Correo_Usuario")    
-    comunaUsuario = models.ForeignKey(max_length=100, verbose_name="Comuna_Usuario")
-    provinciaUsuario = models.ForeignKey(max_length=100, verbose_name="Provincia_Usuario")
-    RegionUsuario = models.ForeignKey(max_length=100, verbose_name="Region_Usuario")
+    comunaUsuario = models.ForeignKey(Comuna, on_delete=models.CASCADE)
+    provinciaUsuario = models.ForeignKey(Provincia, on_delete=models.CASCADE)
+    RegionUsuario = models.ForeignKey(Region, on_delete=models.CASCADE)
     tipoUsuario = models.ForeignKey(TipoUsuario, on_delete=models.CASCADE)
-    centro = models.ForeignKey(Centro)
+    centro = models.ForeignKey(Centro, on_delete=models.CASCADE)
+    sucursal = models.ForeignKey(Sucursal, on_delete=models.CASCADE)
 
 
 
