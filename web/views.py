@@ -23,6 +23,9 @@ from django.shortcuts import render
 # VARIABLES
 urlAPI = "https://us-central1-automed-cl.cloudfunctions.net/webApi/"
 
+# VARIABLES
+urlAPI = "https://us-central1-automed-cl.cloudfunctions.net/webApi/"
+
 def login(request):
     return render(request, 'web/login.html')
 
@@ -69,6 +72,7 @@ def signup():
 # ---------------------------------------------------------------- #
 # --------------------FUNCIONES CONECCIÓN API--------------------- #
 # ---------------------------------------------------------------- #
+
 # OBTENER LISTADO DE TODOS LOS CENTROS
 def getCentros():
     extencion = "centros/"
