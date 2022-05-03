@@ -3,34 +3,71 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="{% static 'web/css/bootstrap.min.css' %} ">
-    <title>Login</title>
     <link rel="stylesheet" href="{% static 'web/css/estilos.css' %}">
+    <title>Login</title>
   </head>
 
   <body>
-    <div calss= "container">
+    <div class="container p-3 my-3 border">
+        <div class="row">
+          <div class="col">          
+            <img src="{% static 'web/img/cesfam.png' %}" width="100" alt="100">
+            <h6>Centros de Salud Familiar</h6>    
+          </div>
+        </div>
+
         <br>
-        <div class="row"class="row">
-            <div class="col"></div>
-            <div class="col">           
-                <ul class="nav justify-content-center" >
-                    <img src="{% static 'web/img/Logo1.png' %}" >
-                </ul>                 
-            </div> 
-            <div class="col"></div>
+        <div class="row align-items-stretch">
+          <div class="col-3 d-none d-lg-block">
+            <br>
+            <br>
+            <br>
+            <br>
+            <ul class="foto">
+              <img src="{% static 'web/img/login.png' %}" width="200" alt="200" >
+            </ul>            
+              
+          </div>
+            
+          <div class="col-9 p-5">
+            <h2 class="fw-bold text-center">Inicio sesión usuarios CESFAM</h2>
+
+            <!-- Login -->
+            <form id="form1"> 
+              <div class="form-mb-6 ">
+                <label class="form-label" >Rut usuario</label>
+                <input type="text" class="form-control" id="rutUsuario" >
+                <div class="invalid-feedback" id="rut" ></div>
+              </div>
+              <br>
+              <div class="form-mb-6">
+                <label class="form-label" >Contraseña</label>
+                <input type="password" class="form-control" id="passwordUsuario">
+                <div class="invalid-feedback" id="password" ></div>
+                <br>
+              </div>
+              <br>
+              <div>
+                <button type="button" class="btn btn-primary btn-block">Entrar</button>
+              </div>
+              <br>
+            </form>
+            <br>
+            <br>                       
+          </div>
         </div>
         
-      </div>
-    
-
-    
+        
+        
+      </div>    
   <script src="{% static 'web/js/jquery-3.6.0.js' %}"></script>
   <script src="{% static 'web/js/popper.js' %}"></script>
   <script src="{% static 'web/js/bootstrap.js' %}"></script>
+  <script src="{% static 'web/js/validacion.js' %}"></script>
 
   </body>
 </html>
