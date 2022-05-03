@@ -6,7 +6,7 @@ function mensajeError(caja, mensaje) {
 
 function noError(caja) {
     $("#" + caja).fadeOut()
-    
+}    
 
 //Validar Rut Usuario
 function validaRutUsuario() {
@@ -35,7 +35,7 @@ $(document).ready(function () {
      /*Configuración inicial del formulario*/
 
     //Todos los mensajes de error ocultos
-    $(".invalid-feedback").hide()
+    $(".invalid-feedback").hide();
 
     //Validar Rut Usuario
     $("#rutUsuario").blur(function () {
@@ -54,11 +54,10 @@ $(document).ready(function () {
         //Validar antes de enviar formulario
         if(
             !validaRutUsuario() ||
-            validaPassword()
+            !validaPassword()
         ){
             event.preventDefault()
         }
     });
 
 });
-
