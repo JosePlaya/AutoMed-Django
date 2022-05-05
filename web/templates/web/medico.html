@@ -1,12 +1,88 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+  <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Médico</title>
-</head>
-<body>
-    <h1>Médico: </h1>
-</body>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static 'web/css/bootstrap.min.css' %} ">
+    <link rel="stylesheet" href="{% static 'web/css/estilos.css' %}">
+    <title>Medico</title>
+  </head>
+
+  <body>
+    <div class="container">
+        <div class="row align-items-end">
+            <div class="col-2">
+                <div>
+                    <label>CESFAM</label>
+                    <label>Marco Maldonado</label>
+                    <label>Viña Del Mar</label>
+                </div>               
+            </div>
+            <div class="col">
+                <br>
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" id="prescripciones-tab" data-toggle="tab" href="#perfil" role="tab" aria-controls="perfil" aria-selected="false">Perfil</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link active" id="farmacia-tab" data-toggle="tab" href="#farmacia" role="tab" aria-controls="farmacia" aria-selected="true">Farmacia</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" id="paciente-tab" data-toggle="tab" href="#paciente" role="tab" aria-controls="paciente" aria-selected="false">Paciente</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" id="medicamentos-tab" data-toggle="tab" href="#medicamentos" role="tab" aria-controls="medicamentos" aria-selected="false">Médicamentos</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" id="articulos-tab" data-toggle="tab" href="#" role="tab" aria-controls="articulos" aria-selected="false">Articulos Médicos</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" id="prescripciones-tab" data-toggle="tab" href="#prescripciones" role="tab" aria-controls="prescripciones" aria-selected="false">Prescripciones</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" id="prescripciones-tab" data-toggle="tab" href="#salir" role="tab" aria-controls="salir" aria-selected="false">Salir</a>
+                    </li>
+                    </ul>
+            </div>
+
+        </div>  
+        
+            <div class="tab-content" id="myTabContent">
+
+                <div class="tab-pane fade show active" id="farmacia" role="tabpanel" aria-labelledby="farmacia-tab">
+                    <div class="row align-items-end">
+                        <div class="col-8"></div>
+                        <div class="col">
+                            <br>
+                            <form class="form-inline my-2 my-lg-0">
+                                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                              </form>
+                        </div>
+                        
+                    </div>
+
+                </div>
+
+
+
+                <div class="tab-pane fade" id="paciente" role="tabpanel" aria-labelledby="paciente-tab">...</div>
+                <div class="tab-pane fade" id="medicamentos" role="tabpanel" aria-labelledby="medicamentos-tab">...</div>
+                <div class="tab-pane fade" id="articulos" role="tabpanel" aria-labelledby="articulos-tab">...</div>
+                <div class="tab-pane fade" id="prescripciones" role="tabpanel" aria-labelledby="prescripciones-tab">...</div>
+                <div class="tab-pane fade" id="perfil" role="tabpanel" aria-labelledby="perfil-tab">...</div>
+                <div class="tab-pane fade" id="articulos" role="tabpanel" aria-labelledby="articulos-tab">...</div>
+            </div>
+    </div>
+    
+    
+    
+  <script src="{% static 'web/js/jquery-3.6.0.js' %}"></script>
+  <script src="{% static 'web/js/popper.js' %}"></script>
+  <script src="{% static 'web/js/bootstrap.js' %}"></script>
+  <script src="{% static 'web/js/validacion.js' %}"></script>
+
+  </body>
 </html>
