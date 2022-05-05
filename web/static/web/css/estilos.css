@@ -1,12 +1,16 @@
-body{
-    background: rgb(240, 239, 239);
-}
-.container{ 
-    background: rgb(255, 255, 255);
-}
-.foto{
+
+#foto{
     display: flex;
     justify-content: center;
     align-items: center;    
 }
 
+#datos{
+    display: flex;
+    justify-content: center;
+    align-items: center;   
+}
+
+.body{
+    background-color: white;
+}

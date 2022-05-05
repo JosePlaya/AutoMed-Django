@@ -19,4 +19,13 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('web.urls') ),
+    path('medico/', include('web.urls') ),
+    path('farmaceutico/', include('web.urls') ),
+    path('administrador/', include('web.urls') ),
+    path('articulos_farmacia/', include('web.urls') ),
+    path('home_farmacia/', include('web.urls') ),
+    path('medicamentos_farmacia/', include('web.urls') ),
+    path('pacientes_farmacia/', include('web.urls') ),
+    path('prescripciones_farmacia/', include('web.urls') ),
+    path('perfil/', include('web.urls') ),
 ]
