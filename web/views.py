@@ -21,10 +21,10 @@ from django.shortcuts import render
 #authe = firebase.auth()
 
 # VARIABLES
-urlAPI = "https://us-central1-automed-cl.cloudfunctions.net/webApi/"
+urlAPI = "https:#us-central1-automed-cl.cloudfunctions.net/webApi/"
 
 # VARIABLES
-urlAPI = "https://us-central1-automed-cl.cloudfunctions.net/webApi/"
+urlAPI = "https:#us-central1-automed-cl.cloudfunctions.net/webApi/"
 
 def test(request):
     return render(request, 'web/test.html')
@@ -78,9 +78,99 @@ def signup():
 
 # OBTENER LISTADO DE TODOS LOS CENTROS
 def getCentros():
+    print('Iniciando get centros...')
     extencion = "centros/"
     finalURL = urlAPI+extencion
     payload={}
     headers = {}
     response = requests.request("GET", finalURL, headers=headers, data=payload)
     print(response.text)
+    
+# ------------------------------------------------- #
+#                   CREAR USUARIO                   #
+# ------------------------------------------------- #
+# NEW ADMIN USER
+
+# NEW MEDICO USER
+
+# NEW FARMACEUTICO USER
+
+
+
+# ------------------------------------------------- #
+#                     CENTORS                       #
+# ------------------------------------------------- #
+# CREAR NUEVO CENTRO
+
+# OBTENER TODOS LOS CENTRO
+
+# OBTENER UN CENTRO
+
+
+
+# ------------------------------------------------- \\
+#                     PACIENTES                     \\
+# ------------------------------------------------- \\
+# CREAR NUEVO PACIENTE
+
+# OBTENER TODOS LOS PACIENTES
+
+# OBTENER UN PACIENTE POR ID
+
+# OBTENER UN PACIENTE POR RUT
+
+# ACTUALIZAR UN PACIENTE
+
+# ELIMINAR PACIENTE 
+
+
+
+# ------------------------------------------------- \\
+#                INFORMACIÓN USUARIOS               \\
+# ------------------------------------------------- \\
+# OBTENER INFORMACIÓN USUARIO ADMIN
+
+# OBTENER INFORMACIÓN USUARIO FARMACEUTICO
+
+# OBTENER INFORMACIÓN USUARIO FARMACEUTICO
+
+
+
+# ------------------------------------------------- \\
+#                    MEDICAMENTOS                   \\
+# ------------------------------------------------- \\
+# CREAR NUEVO MEDICAMENTOS
+
+# OBTENER TODOS LOS MEDICAMENTOS
+
+# OBTENER TODOS LOS MEDICAMENTOS DE UN CENTRO
+
+# OBTENER UN MEDICAMENTO POR ID
+
+# OBTENER UN MEDICAMENTO POR SU CÓDIGO
+
+# ACTUALIZAR UN MEDICAMENTO
+
+# ELIMINAR MEDICAMENTO 
+
+# OBTENER STOCK DE UN MEDICAMENTO POR ID
+
+# OBTENER STOCK DE UN MEDICAMENTO POR SU CÓDIGO
+
+# ACTUALIZAR STOCK DE UN MEDICAMENTO POR ID
+
+
+
+# ------------------------------------------------- \\
+#                    PREESCRIPCIÓN                  \\
+# ------------------------------------------------- \\
+# OBTENER TODOS LOS MEDICAMENTOS
+
+# OBTENER UNA PREESCRIPCION
+
+# CREAR NUEVO MEDICAMENTOS
+
+# ACTUALIZAR UN MEDICAMENTO
+
+# ELIMINAR MEDICAMENTO 
+
