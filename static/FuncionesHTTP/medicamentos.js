@@ -1,4 +1,4 @@
-import { BASE_URL_API } from './config.js';
+import { BASE_URL_API } from '../config.js';
 
 // $(document).ready(function() {
 //     console.log('INICIANDO REQUEST A LA API...');
