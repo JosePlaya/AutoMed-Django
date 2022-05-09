@@ -35,6 +35,25 @@
           <div class="col-9 p-5">
             <h2 class="fw-bold text-center">Inicio sesión usuarios CESFAM</h2>
             <!-- Login -->
+            <form action="{% url 'nuevo_cliente_frecuente' %}" method="post">
+                <!-- Correo -->
+                <div class="form-mb-6">
+                    <label for="correo_login"><span class="red">* </span>Correo</label>
+                    <input type="email" name="email" id="correo_login" class="form-control" placeholder="correo_login" required multiple>
+                </div>
+
+                <!-- Contraseña -->
+                <div class="form-mb-6">
+                    <label for="contrasena_login"><span class="red">* </span>Contraseña</label>
+                    <input type="password" name="contraseña" id="contrasena_login" class="form-control" placeholder="contrasena_login" required multiple>
+                </div>
+
+                <!-- Btn login -->
+                <div>
+                    <button type="submit" class="btn btn-primary btn-block">INICIAR</button>
+                </div>
+
+            </form>
             <form id="form1"> 
               <div class="form-mb-6 ">
                 <label class="form-label" >Rut usuario</label>

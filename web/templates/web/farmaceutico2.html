@@ -1,0 +1,124 @@
+{% load static %}
+
+{% block customhead %}
+<title> Farmaceutico </title>
+{% endblock %}
+
+
+{% block body%}
+<body>
+<div class="container">
+    <div class="row align-items-end">
+        <div class="col-2">
+            <div>
+                <label>CESFAM</label>
+                <label>Marco Maldonado</label>
+                <label>Viña Del Mar</label>
+            </div>               
+        </div>
+        <div class="col">
+            <br>
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link" id="prescripciones-tab" data-toggle="tab" href="#perfil" role="tab" aria-controls="perfil" aria-selected="false">Perfil</a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link active" id="farmacia-tab" data-toggle="tab" href="#farmacia" role="tab" aria-controls="farmacia" aria-selected="true">Farmacia</a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link" id="paciente-tab" data-toggle="tab" href="#paciente" role="tab" aria-controls="paciente" aria-selected="false">Paciente</a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link" id="medicamentos-tab" data-toggle="tab" href="#medicamentos" role="tab" aria-controls="medicamentos" aria-selected="false">Médicamentos</a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link" id="articulos-tab" data-toggle="tab" href="#" role="tab" aria-controls="articulos" aria-selected="false">Articulos Médicos</a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link" id="prescripciones-tab" data-toggle="tab" href="#prescripciones" role="tab" aria-controls="prescripciones" aria-selected="false">Prescripciones</a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link" id="prescripciones-tab" data-toggle="tab" href="#salir" role="tab" aria-controls="salir" aria-selected="false">Salir</a>
+                </li>
+                </ul>
+        </div>
+
+    </div>  
+    
+        <div class="tab-content" id="myTabContent">
+
+            <div class="tab-pane fade show active" id="farmacia" role="tabpanel" aria-labelledby="farmacia-tab">
+                <div class="row align-items-end">
+                    <div class="col-8"></div>
+                    <div class="col">
+                        <br>
+                        <form class="form-inline my-2 my-lg-0">
+                            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                            </form>
+                    </div>
+                    
+                </div>
+
+            </div>
+
+
+
+            <div class="tab-pane fade" id="paciente" role="tabpanel" aria-labelledby="paciente-tab">...</div>
+
+            <!-- MEDICAMENTOS -->
+            <div class="tab-pane fade" id="medicamentos" role="tabpanel" aria-labelledby="medicamentos-tab">
+                <div class="jumbo-table">
+                    <div class="scrollabe-bg">
+                        <table class="table table-responsive-md table-bordered" id="medicamentos">
+                            <thead>
+                              <tr>
+                                <th scope="col">Codigo</th>
+                                <th scope="col">Nombre</th>
+                                <th scope="col">Gramaje</th>
+                                <th scope="col">Cantidad</th>
+                                <th scope="col">Contenido</th>
+                                <th scope="col">Fabricante</th>
+                                <th scope="col">Descripción</th>
+                                <th scope="col">Stock</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {% for m,e in med %}
+                              <tr>
+                                <td>{{e}}</td>
+                                <td>{{m.codigo}}</td>
+                                <td>{{m.nombre}}</td>
+                                <td>{{m.gramaje}}</td>
+                                <td>{{m.cantidad}}</td>
+                                <td>{{m.contenido}}</td>
+                                <td>{{m.fabricante}}</td>
+                                <td>{{m.descripcion}}</td>
+                                <td>{{m.stock}}</td>
+                                <td>
+                                    #
+                                </td>
+                              </tr>
+                              {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="articulos" role="tabpanel" aria-labelledby="articulos-tab">...</div>
+            <div class="tab-pane fade" id="prescripciones" role="tabpanel" aria-labelledby="prescripciones-tab">...</div>
+            <div class="tab-pane fade" id="perfil" role="tabpanel" aria-labelledby="perfil-tab">...</div>
+            <div class="tab-pane fade" id="articulos" role="tabpanel" aria-labelledby="articulos-tab">...</div>
+        </div>
+</div>
+{% endblock %}
+
+
+{% block customscripts %}
+<script src="{% static 'web/js/jquery-3.6.0.js' %}"></script>
+<script src="{% static 'web/js/popper.js' %}"></script>
+<script src="{% static 'web/js/bootstrap.js' %}"></script>
+<script src="{% static 'web/js/validaciones.js' %}"></script>
+<script src="{% static 'web/js/FuncionesHTTP/medicamentos.js' %}" type="text/javascript"></script>
+{% endblock %}
