@@ -1,6 +1,6 @@
 from . import views as main_views
 from django.urls import path
-from .views import login
+from .views import login, index
 from .views import medico
 from .views import farmaceutico
 from .views import administrador
@@ -9,6 +9,7 @@ from .views import test
 urlpatterns = [
     path('',login, name="login"),
     path('login/',login, name="login"),
+    path('index/',index, name="index"),
     path('test/',test, name="test"),
     path('medico/',medico, name="medico"),
     path('farmaceutico/',farmaceutico, name="farmaceutico"),

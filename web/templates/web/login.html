@@ -13,12 +13,13 @@
 
   <body>
     <div class="container p-3 my-3 border">
-      <div class="row">
-        <div class="col">          
-          <img src="{% static 'web/img/cesfam.png' %}" width="100" alt="100">
-          <h6>Centros de Salud Familiar</h6>    
+        <div class="row">
+          <div class="col">          
+            <img src="{% static 'web/img/cesfam.png' %}" width="100" alt="100">
+            <h6>Centros de Salud Familiar</h6>    
+          </div>
         </div>
-      </div>
+
         <br>
         <div class="row align-items-stretch">
           <div class="col-3 d-none d-lg-block">
@@ -34,6 +35,7 @@
             
           <div class="col-9 p-5">
             <h2 class="fw-bold text-center">Inicio sesión usuarios CESFAM</h2>
+
             <!-- Login -->
             <form action="{% url 'nuevo_cliente_frecuente' %}" method="post">
                 <!-- Correo -->
@@ -75,16 +77,16 @@
             </form>
             <br>
             <br>                       
+          </div>
         </div>
-      </div>
         
         
         
-    </div>    
-  <script src="{% static 'web/js/jquery-3.6.0.js' %}"></script>
-  <script src="{% static 'web/js/popper.js' %}"></script>
-  <script src="{% static 'web/js/bootstrap.js' %}"></script>
-  <script src="{% static 'web/js/validacion.js' %}"></script>
+      </div>    
+  <script src="{% static 'dist/js/jquery-3.6.0.js' %}"></script>
+  <script src="{% static 'dist/js/popper.js' %}"></script>
+  <script src="{% static 'dist/js/bootstrap.js' %}"></script>
+  <script src="{% static 'dist/js/validaciones.js' %}"></script>
 
   </body>
 </html>

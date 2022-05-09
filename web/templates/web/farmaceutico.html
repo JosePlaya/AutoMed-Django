@@ -1,14 +1,15 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="{% static 'web/css/bootstrap.min.css' %} ">
-    <link rel="stylesheet" href="{% static 'web/css/estilos.css' %}">
-    <title>Farmacéutico</title>
-  </head>
+{% extends "web/index.html" %}
+{% block content %}
+<section class="content-header">
+    <h1 class="pull-left">Menu para Farmaceutico</h1>
+    <h1 class="pull-right">
+    </h1>
+</section>
+<div class="content">
+    <div class="content">
+        <div class="clearfix"></div>
+        <div class="box box-primary">
+            <div class="box-body">
 
   <body>
     <div class="container">
@@ -74,15 +75,9 @@
                 <div class="tab-pane fade" id="prescripciones" role="tabpanel" aria-labelledby="prescripciones-tab">...</div>
                 <div class="tab-pane fade" id="perfil" role="tabpanel" aria-labelledby="perfil-tab">...</div>
                 <div class="tab-pane fade" id="articulos" role="tabpanel" aria-labelledby="articulos-tab">...</div>
-            </div>
-    </div>
-    
-    
-    
-  <script src="{% static 'web/js/jquery-3.6.0.js' %}"></script>
-  <script src="{% static 'web/js/popper.js' %}"></script>
-  <script src="{% static 'web/js/bootstrap.js' %}"></script>
-  <script src="{% static 'web/js/validaciones.js' %}"></script>
 
-  </body>
-</html>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

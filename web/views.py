@@ -39,6 +39,9 @@ def farmaceutico(request):
 
 def administrador(request):
     return render(request, 'web/administrador.html')
+    
+def index(request):
+    return render(request, 'web/index.html')
 
 
 # ---------------------------------------------------------------- #
