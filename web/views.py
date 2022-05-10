@@ -1,4 +1,4 @@
-#import requests
+import requests
 import json
 from django.shortcuts import render
 #from pyrebase import pyrebase
@@ -23,8 +23,6 @@ from django.shortcuts import render
 # VARIABLES
 urlAPI = "https:#us-central1-automed-cl.cloudfunctions.net/webApi/"
 
-# VARIABLES
-urlAPI = "https:#us-central1-automed-cl.cloudfunctions.net/webApi/"
 
 def test(request):
     return render(request, 'web/test.html')
@@ -36,7 +34,8 @@ def medico(request):
     return render(request, 'web/medico.html')
 
 def farmaceutico(request):
-    return render(request, 'web/farmaceutico.html')
+    get_medicamentos()
+    return render(request, 'web/farmaceutico2.html')
 
 def administrador(request):
     return render(request, 'web/administrador.html')
@@ -145,6 +144,13 @@ def getCentros():
 # CREAR NUEVO MEDICAMENTOS
 
 # OBTENER TODOS LOS MEDICAMENTOS
+def get_medicamentos():
+    print('Iniciando get medicamentos...')
+    url = "https://us-central1-automed-cl.cloudfunctions.net/webApi/medicamentos/"
+    payload={}
+    headers = {}
+    response = requests.request("GET", url, headers=headers, data=payload)
+    print(response.text)
 
 # OBTENER TODOS LOS MEDICAMENTOS DE UN CENTRO
 

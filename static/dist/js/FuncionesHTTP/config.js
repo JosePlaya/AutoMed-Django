@@ -1,1 +1,0 @@
-export const BASE_URL_API = 'https://us-central1-automed-cl.cloudfunctions.net/webApi/'
