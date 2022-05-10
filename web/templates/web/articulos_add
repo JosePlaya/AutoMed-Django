@@ -1,0 +1,44 @@
+{% extends "web/index.html" %}
+{% block content %}
+
+<section class="content-header">
+    <h1 class="pull-left">Agregar Artículo Medico</h1>
+    <h1 class="pull-right">
+    </h1>
+</section>
+<div class="content">
+    <div class="content">
+        <div class="clearfix"></div>
+        <div class="box box-primary">
+            <div class="box-body">
+
+              <div class="row">
+                  <div class="col-md-12">
+
+                    <form>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="nombre_articulo" class="control-label">Nombre</label>
+                                <input id="nombre_articulo" class="form-control" required maxlength="100" name="nombre_articulo" type="text">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="descripcion_articulo" class="control-label">Descripción</label>
+                                <input id="descripcion_articulo" class="form-control" required maxlength="100" name="descripcion_articulo" type="text">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="stock_articulo" class="control-label">Stock</label>
+                                <input id="stock_articulo" class="form-control" required maxlength="100" name="stock_articulo" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-12" style="margin-top: 10px;">
+                            <input class="btn btn-primary" type="submit" value="Guardar">
+                            <a href="#" class="btn btn-danger">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

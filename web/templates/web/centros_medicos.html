@@ -1,0 +1,61 @@
+{% extends "web/index.html" %}
+{% block content %}
+<section class="content-header">
+    <h1 class="pull-left">Centros medicos</h1>
+    <h1 class="pull-right" align="right">
+        <a class="btn btn-primary pull-right" style="margin-top: -10px;margin-bottom: 5px" href="{% url 'centros_medicos_add' %}">Agregar</a>
+     </h1>
+</section>
+<div class="content">
+    <div class="content">
+        <div class="clearfix"></div>
+        <div class="box box-primary">
+            <div class="box-body">
+
+              <div class="row">
+                    <div class="col-md-12">
+                        <table id="table_id" class="display">
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Dirección</th>
+                                    <th>Región</th>
+                                    <th>Comuna</th>
+                                    <th>Tipo</th>
+                                    <th>Accion</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Nombre1</td>
+                                    <td>Dirección1</td>
+                                    <td>Región1</td>
+                                    <td>Comuna1</td>
+                                    <td>Tipo1</td>
+                                    <td>
+                                        <a href="#" class='btn btn-info'><i class="fas fa-edit"></i></a>
+                                        <button type="submit" class="btn btn-danger" onclick="return confirm('¿Estas seguro que deseas eliminar el registro?')"> <i class="fas fa-times-circle"></i> </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Nombre2</td>
+                                    <td>Dirección2</td>
+                                    <td>Región2</td>
+                                    <td>Comuna2</td>
+                                    <td>Tipo2</td>
+                                    <td>
+                                        <a href="#" class='btn btn-info'><i class="fas fa-edit"></i></a>
+                                        <button type="submit" class="btn btn-danger" onclick="return confirm('¿Estas seguro que deseas eliminar el registro?')"> <i class="fas fa-times-circle"></i> </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div> 
+                    
+                    
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

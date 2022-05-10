@@ -42,6 +42,39 @@ def administrador(request):
 def index(request):
     return render(request, 'web/index.html')
 
+def medicamentos(request):
+    return render(request, 'web/medicamentos.html')
+
+def medicamentos_add(request):
+    return render(request, 'web/medicamentos_add.html')
+
+def articulos(request):
+    return render(request, 'web/articulos.html')
+
+def articulos_add(request):
+    return render(request, 'web/articulos_add.html')
+
+def centros_medicos(request):
+    return render(request, 'web/centros_medicos.html')
+
+def centros_medicos_add(request):
+    return render(request, 'web/centros_medicos_add.html')
+
+def farmaceuticos(request):
+    return render(request, 'web/farmaceuticos.html')
+
+def articulos_add(request):
+    return render(request, 'web/articulos_add.html')
+
+def farmaceuticos_add(request):
+    return render(request, 'web/farmaceuticos_add.html')
+
+def medicos(request):
+    return render(request, 'web/medicos.html')
+
+def medicos_add(request):
+    return render(request, 'web/medicos_add.html')
+
 
 # ---------------------------------------------------------------- #
 # ---------------------FIREBASE AUTH METHOD----------------------- #

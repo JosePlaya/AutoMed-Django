@@ -9,6 +9,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.min.css' %}">
+  <!-- Data Table -->
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
   <!-- Ionicons -->
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css' %}">
   <!-- Tempusdominus Bbootstrap 4 -->
@@ -169,7 +171,7 @@
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-          <li class="nav-item has-treeview">
+          <li class="nav-item has-treeview menu-open">
             <a href="#" class="nav-link">
               <i class="nav-icon fa-regular fa-user"></i>
               <p>
@@ -179,40 +181,41 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="{% url 'medicamentos' %}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Stock Farmacia</p>
+                  <p>Medicamentos</p>
+                </a>
+              </li>
+            
+              <li class="nav-item">
+                <a href="{% url 'articulos' %}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Artículos</p>
+                </a>
+              </li>
+              
+              <li class="nav-item">
+                <a href="{% url 'centros_medicos' %}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Centros Médicos</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="{% url 'farmaceuticos' %}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Medicamento</p>
+                  <p>Farmacéuticos</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="{% url 'medicos' %}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Retiro Medicamentos</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Artículo Médico</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Usuarios</p>
+                  <p>Médicos</p>
                 </a>
               </li>
             </ul>
           </li>
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
-              
               <i class="nav-icon fa-regular fa-address-book"></i>
               <p>
                 Farmacéutico
@@ -221,66 +224,107 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Stock Farmacia</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Paciente</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="{% url 'medicamentos' %}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Medicamentos</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="{% url 'listado_medicamentos' %}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Entrega Medicamentos</p>
+                  <p>Listado de Medicamentos</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="{% url 'medicamentos_sin_stock' %}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Reserva De Medicamentos</p>
+                  <p>Medicamentos sin Stock</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Cancelación Reserva</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Prescripciones</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Recetas</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="{% url 'articulos' %}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Artículos</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="listado_articulos" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Recetas</p>
+                  <p>Listado de Artículos</p>
                 </a>
               </li>
-              
+              <li class="nav-item">
+                <a href="{% url 'articulos_sin_stock' %}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Artículos sin stock</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Buscar Paciente</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Reservar Medicamento</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Listado Prescripciones</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Listado recetas</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Entrega de Medicamentos</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Solicitudes de Artículos</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Entrega de Artículos</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Agregar Stock Medicamentos</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Agregar Stock Artículos</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Reservar Medicamentos</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Listar Reservas</p>
+                </a>
+              </li>
             </ul>
           </li>
           <li class="nav-item has-treeview">
@@ -386,6 +430,8 @@
 <!-- daterangepicker -->
 <script src="{% static 'plugins/moment/moment.min.js' %}"></script>
 <script src="{% static 'plugins/daterangepicker/daterangepicker.js' %}"></script>
+<!-- DataTable -->
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
 <!-- Tempusdominus Bootstrap 4 -->
 <script src="{% static 'plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js' %}"></script>
 <!-- Summernote -->
@@ -398,5 +444,39 @@
 <script src="{% static 'dist/js/pages/dashboard.js' %}"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="{% static 'dist/js/demo.js' %}"></script>
+<!-- Scripts para datatable en español-->
+<script>
+  $(document).ready( function () {
+  $('#table_id').DataTable( {
+    responsive: {
+        details: false
+    },
+
+    language: {
+        "decimal": ",",
+        "emptyTable": "No hay información",
+        "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+        "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+        "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+        "infoPostFix": "",
+        "thousands": ",",
+        "lengthMenu": "Mostrar _MENU_ Entradas",
+        "loadingRecords": "Cargando...",
+        "processing": "Procesando...",
+        "search": "Buscar:",
+        "thousands": "'",
+        "zeroRecords": "Sin resultados encontrados",
+        "paginate": {
+            "first": "Primero",
+            "last": "Ultimo",
+            "next": "Siguiente",
+            "previous": "Anterior"
+        }
+    },
+    
+
+  });
+  } );
+</script>
 </body>
 </html>

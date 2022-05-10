@@ -1,0 +1,68 @@
+{% extends "web/index.html" %}
+{% block content %}
+
+<section class="content-header">
+    <h1 class="pull-left">Agregar Medicamento</h1>
+    <h1 class="pull-right">
+    </h1>
+</section>
+<div class="content">
+    <div class="content">
+        <div class="clearfix"></div>
+        <div class="box box-primary">
+            <div class="box-body">
+
+              <div class="row">
+                  <div class="col-md-12">
+
+                    <form>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="nombre_medicamento" class="control-label">Nombre</label>
+                                <input id="nombre_medicamento" class="form-control" required maxlength="100" name="nombre_medicamento" type="text">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="codigo_medicamento" class="control-label">Código</label>
+                                <input id="codigo_medicamento" class="form-control" required maxlength="100" name="codigo_medicamento" type="text">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="descripcion_medicamento" class="control-label">Descripción</label>
+                                <input id="descripcion_medicamento" class="form-control" required maxlength="100" name="descripcion_medicamento" type="text">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="fabricante_medicamento" class="control-label">Fabricante</label>
+                                <input id="fabricante_medicamento" class="form-control" required maxlength="100" name="fabricante_medicamento" type="text">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="contenido_medicamento" class="control-label">Contenido</label>
+                                <input id="contenido_medicamento" class="form-control" required maxlength="100" name="contenido_medicamento" type="text">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="cantidad_medicamento" class="control-label">Cantidad</label>
+                                <input id="cantidad_medicamento" class="form-control" required maxlength="100" name="cantidad_medicamento" type="text">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="gramaje_medicamento" class="control-label">Gramaje</label>
+                                <input id="gramaje_medicamento" class="form-control" required maxlength="100" name="gramaje_medicamento" type="text">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="stock_medicamento" class="control-label">Stock</label>
+                                <input id="stock_medicamento" class="form-control" required maxlength="100" name="stock_medicamento" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-12" style="margin-top: 10px;">
+                            <input class="btn btn-primary" type="submit" value="Guardar">
+                            <a href="#" class="btn btn-danger">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
