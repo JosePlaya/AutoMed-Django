@@ -21,7 +21,7 @@ from django.shortcuts import render
 #authe = firebase.auth()
 
 # VARIABLES
-urlAPI = "https:#us-central1-automed-cl.cloudfunctions.net/webApi/"
+urlAPI = "https://us-central1-automed-cl.cloudfunctions.net/webApi/"
 
 
 def test(request):
@@ -34,7 +34,6 @@ def medico(request):
     return render(request, 'web/medico.html')
 
 def farmaceutico(request):
-    get_medicamentos()
     return render(request, 'web/farmaceutico2.html')
 
 def administrador(request):
@@ -68,10 +67,6 @@ def index(request):
 #    except:
 #        pass
 #    return render(request,"Login.html")
-
-#SE DEBE BORRAR ESTA FUNCION
-def signup():
-    print('test')
 
 
 # ---------------------------------------------------------------- #
