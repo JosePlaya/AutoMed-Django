@@ -51,7 +51,7 @@
         </form>
 
 
-        <button onclick="loginMail('weasplaya@gmail.com', '123456')">LOGIN</button>
+        <button onclick="loginMail()">LOGIN</button>
         <button onclick="logout()">LOGOUT</button>
         <button href="{% url 'getCentros' %}" class="btn btn-primary">GET CENTROS</button>
         
@@ -60,8 +60,8 @@
     <script src="https://www.gstatic.com/firebasejs/9.7.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.7.0/firebase-firestore-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.7.0/firebase-auth-compat.js"></script>
-    <script type="text/javascript">
-      import { firebaseConfig } from 'web/static/js/config.js'
+    <script>
+      //import { firebaseConfig } from 'web/static/js/config.js'
 
       // Configuración credenciales acceso
       const firebaseApp = firebase.initializeApp({ 

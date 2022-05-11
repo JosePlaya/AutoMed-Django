@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="{% static 'dist/css/bootstrap.min.css' %} ">
     <link rel="stylesheet" href="{% static 'dist/css/estilos.css' %}">
 
+    <script type="module" src="{% static 'funciones/config.js' %}" crossorigin="firebaseConfig"></script>
+
     <title>Login</title>
   </head>
 
@@ -40,44 +42,25 @@
             <h2 class="fw-bold text-center">Inicio sesión usuarios CESFAM</h2>
 
             <!-- Login -->
-            <form action="loginMail()">
-                <!-- Correo -->
-                <div class="form-mb-6">
-                    <label for="correo_login"><span class="red">* </span>Correo</label>
-                    <input type="email" name="email" id="correo_login" class="form-control" placeholder="correo_login" required multiple>
-                </div>
-
-                <!-- Contraseña -->
-                <div class="form-mb-6">
-                    <label for="contrasena_login"><span class="red">* </span>Contraseña</label>
-                    <input type="password" name="contraseña" id="contrasena_login" class="form-control" placeholder="contrasena_login" required multiple>
-                </div>
-
-                <!-- Btn login -->
-                <div>
-                    <button type="submit" class="btn btn-primary btn-block">INICIAR</button>
-                </div>
-
-            </form>
-            <form id="form1"> 
-              <div class="form-mb-6 ">
-                <label class="form-label" >Rut usuario</label>
-                <input type="text" class="form-control" id="rutUsuario" >
-                <div class="invalid-feedback" id="rut" ></div>
-              </div>
-              <br>
-              <div class="form-mb-6">
-                <label class="form-label" >Contraseña</label>
-                <input type="password" class="form-control" id="passwordUsuario">
-                <div class="invalid-feedback" id="password" ></div>
-                <br>
-              </div>
-              <br>
-              <div>
-                <button type="button" class="btn btn-primary btn-block" onclick="loginMail()">Entrar</button>
-              </div>
-              <br>
-            </form>
+            <div class="form-mb-6 ">
+              <form action="javascript:loginMail()">
+                  <!-- Correo -->
+                  <label class="form-label" >Correo</label>
+                  <input type="email" name="email" class="form-control" id="emailUsuario" placeholder="correo" required multiple>
+                  <div class="invalid-feedback" id="rut" ></div>
+                  <br>
+                  <!-- Contraseña -->
+                  <label class="form-label" >Contraseña</label>
+                  <input type="password" name="contrasena" class="form-control" id="passwordUsuario" placeholder="contraseña" required multiple>
+                  <div class="invalid-feedback" id="password" ></div>
+                  <br>
+                  <br>
+                  <!-- Btn login -->
+                  <div>
+                    <button type="submit" class="btn btn-primary btn-block">Entrar</button>
+                  </div>
+              </form>
+            </div>
             <br>
             <br>                       
           </div>
@@ -93,42 +76,115 @@
   <script src="https://www.gstatic.com/firebasejs/9.7.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.7.0/firebase-firestore-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.7.0/firebase-auth-compat.js"></script>
-  <script type="text/javascript">
-
-    import { firebaseConfig } from 'web/static/js/config.js'
-
-    // Configuración credenciales acceso
-    console.log(firebaseConfig);
-    const firebaseApp = firebase.initializeApp(firebaseConfig);
-    const db = firebaseApp.firestore();
-    const auth = firebaseApp.auth();
-    
+  <script type="module" src="{% static 'funciones/config.js' %}"></script>
+  <script type="text/javascript">    
     // LOG IN
     function loginMail(){
-        console.log('Iniciando login...');
-    
-        // Datos de entrada
-        const email = document.getElementById('emailUsuario').value;
-        const password = document.getElementById('passwordUsuario').value;
-    
-        console.log(email, password);
-    
-        firebase.auth().signInWithEmailAndPassword(email, password)
-        .then((userCredential) => {
-            // Signed in
-            var user = userCredential.user;
-            console.log('¡SESIÓN INICIADA!');
-            console.log(user);
-            // Redireccionamiento a la nueva vista
-            // ...
-        })
-        .catch((error) => {
-            var errorCode = error.code;
-            var errorMessage = error.message;
-            console.log('ERROR: código: ', errorCode);
-            console.log('ERROR: mensaje: ', errorMessage);
+        import(`../../static/funciones/config.js`).then((data) => {
+            // Configuración credenciales acceso
+            const firebaseApp = firebase.initializeApp(data.firebaseConfig);
+            const db = firebaseApp.firestore();
+            const auth = firebaseApp.auth();
+        
+            // Datos de entrada
+            const email = document.getElementById('emailUsuario').value;
+            const password = document.getElementById('passwordUsuario').value;
+
+            // Login
+            firebase.auth().signInWithEmailAndPassword(email, password)
+            .then((userCredential) => {
+                // Signed in
+                var user = userCredential.user;
+                console.log('¡SESIÓN INICIADA!');
+                // Obtener datos del usuario
+                // Redireccionar a la vista correspondiente
+                $.ajax({
+                  type:'GET',
+                  url:'/getUser/'+user.uid,
+                  success: function(data) {                                                     
+                      switch(data){
+                        case "admin":
+                          window.location.href = "/administrador"
+                          break;
+                        case "medico":
+                          window.location.href = "/medico"
+                          break;
+                        case "farmaceutico":
+                          window.location.href = "/farmaceutico"
+                          break;
+                      }
+                  }
+              });
+            })
+            .catch((error) => {
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                console.log('ERROR: código: ', errorCode);
+                console.log('ERROR: mensaje: ', errorMessage);
+                // Mostrar mensaje de error de credenciales
+                // ...
+            });
         });
     }
+
+    // Obtener datos del usuario
+    async function getUsuario(uid) {
+        console.log('Inside of myfunction');
+
+        $.ajax({
+          url: "https://us-central1-automed-cl.cloudfunctions.net/webApi/usuario/"+uid,
+          type: "GET",
+          crossDomain: true,
+          dataType: "application/json",
+          success: function (response) {
+              var resp = JSON.parse(response)
+              alert(resp.status);
+          },
+          error: function (xhr, status) {
+              alert("error");
+          }
+      });
+
+
+
+      {% comment %}var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+        var requestOptions = {
+          method: 'GET',
+          headers: myHeaders,
+          redirect: 'follow',
+          mode: 'no-cors'
+        };
+         let response = await fetch("https://us-central1-automed-cl.cloudfunctions.net/webApi/usuario/"+uid, requestOptions);
+        if (response.ok) { // if HTTP-status is 200-299
+          // get the response body (the method explained below)
+          let json = await response.json();
+        } else {
+          alert("HTTP-Error: " + response.status + response.json());
+        }
+        fetch("https://us-central1-automed-cl.cloudfunctions.net/webApi/usuario/"+uid, requestOptions)
+        .then(response => {
+          console.log('corecto?')
+          console.log('status:'+response.response)
+        })
+        .then(result => {
+          console.log('corecto2?')
+          console.log('resultado: '+result)
+        })
+        .catch(error => {
+          console.log('incorrecto?')
+          console.log('error', error)
+        });{% endcomment %}
+    }
+
+    function start(uid) {
+      return getUsuario(uid);
+    }
+     
+    
+
   </script>
   </body>
 </html>
+
+

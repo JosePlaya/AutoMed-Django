@@ -10,6 +10,7 @@ from .views import medicos, medicos_add
 
 
 urlpatterns = [
+    # VISTAS
     path('',login, name="login"),
     path('login/',login, name="login"),
     path('index/',index, name="index"),
@@ -17,9 +18,6 @@ urlpatterns = [
     path('medico/',medico, name="medico"),
     path('farmaceutico/',farmaceutico, name="farmaceutico"),
     path('administrador/',administrador, name="administrador"),
-    path('getCentros/', main_views.getCentros, name="getCentros"),
-    path('signup/', main_views.signup, name="signup"),
-    path('get_medicamentos/', main_views.get_medicamentos, name="get_medicamentos"),
     path('medicamentos/',medicamentos, name="medicamentos"),
     path('medicamentos_add/',medicamentos_add, name="medicamentos_add"),
     path('articulos/',articulos, name="articulos"),
@@ -30,4 +28,9 @@ urlpatterns = [
     path('farmaceuticos_add/',farmaceuticos_add, name="farmaceuticos_add"),
     path('medicos/',medicos, name="medicos"),
     path('medicos_add/',medicos_add, name="medicos_add"),
+    
+    # MÉTODOS
+    path('getCentros/', main_views.getCentros, name="getCentros"),
+    path('getUser/<str:id>', main_views.getUser, name="getUser"),
+    path('get_medicamentos/', main_views.get_medicamentos, name="get_medicamentos"),
 ]
