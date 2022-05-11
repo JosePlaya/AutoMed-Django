@@ -7,6 +7,8 @@ from .views import articulos, articulos_add
 from .views import centros_medicos, centros_medicos_add
 from .views import farmaceuticos, farmaceuticos_add
 from .views import medicos, medicos_add
+from .views import pacientes, pacientes_add
+from .views import prescripciones, prescripciones_add
 
 
 urlpatterns = [
@@ -28,6 +30,10 @@ urlpatterns = [
     path('farmaceuticos_add/',farmaceuticos_add, name="farmaceuticos_add"),
     path('medicos/',medicos, name="medicos"),
     path('medicos_add/',medicos_add, name="medicos_add"),
+    path('pacientes/',pacientes, name="pacientes"),
+    path('pacientes_add/',pacientes_add, name="pacientes_add"),
+    path('prescripciones/',prescripciones, name="prescripciones"),
+    path('prescripciones_add/',prescripciones_add, name="prescripciones_add"),
     
     # MÉTODOS
     path('getCentros/', main_views.getCentros, name="getCentros"),
