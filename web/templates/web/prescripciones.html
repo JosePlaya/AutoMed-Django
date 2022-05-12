@@ -1,9 +1,9 @@
 {% extends "web/index.html" %}
 {% block content %}
 <section class="content-header">
-    <h1 class="pull-left">Médicos</h1>
+    <h1 class="pull-left">Prescripciones</h1>
     <h1 class="pull-right" align="right">
-        <a class="btn btn-primary pull-right" style="margin-top: -10px;margin-bottom: 5px" href="{% url 'medicos_add' %}">Agregar</a>
+        <a class="btn btn-primary pull-right" style="margin-top: -10px;margin-bottom: 5px" href="{% url 'prescripciones_add' %}">Agregar</a>
      </h1>
 </section>
 <div class="content">
@@ -17,41 +17,41 @@
                         <table id="table_id" class="display">
                             <thead>
                                 <tr>
-                                    <th>Tipo de Usuario</th>
-                                    <th>Correo</th>
-                                    <th>Rut</th>
-                                    <th>Nombre</th>
-                                    <th>Apellido Paterno</th>
-                                    <th>Apellido Materno</th>
-                                    <th>Id Centro Médico</th>
-                                    <th>Especialidad</th>
+                                    <th>Rut Médico</th>
+                                    <th>Nombre Médico</th>
+                                    <th>Rut Paciente</th>
+                                    <th>Nombre Paciente</th>
+                                    <th>Id Centro Médico/th>
+                                    <th>Medicamento</th>
+                                    <th>Id Medicamento</th>
+                                    <th>Duración Tratamiento</th>
                                     <th>Acción</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>Médico</td>
-                                    <td>medico@correo.cl</td>
-                                    <td>11.111.111-9</td>
-                                    <td>Nombre Med</td>
-                                    <td>Apellido Paterno Med</td>
-                                    <td>Apellido Materno Med2</td>
+                                    <td>11.111.111-1</td>
+                                    <td>Nombre Med1</td>
+                                    <td>3.333.333-3</td>
+                                    <td>Nombre Paciente1</td>
                                     <td>555</td>
-                                    <td>Especialidad</td>
+                                    <td>Medicamento1</td>
+                                    <td>Id Medicamento1</td>
+                                    <td>Duracion Tratamiento</td>
                                     <td>
                                         <a href="#" class='btn btn-info'><i class="fas fa-edit"></i></a>
                                         <button type="submit" class="btn btn-danger" onclick="return confirm('¿Estas seguro que deseas eliminar el registro?')"> <i class="fas fa-times-circle"></i> </button>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>Médico2</td>
-                                    <td>medico2@correo.cl</td>
-                                    <td>11.111.111-9</td>
-                                    <td>Nombre Med2</td>
-                                    <td>Apellido Paterno Med2</td>
-                                    <td>Apellido Materno Med2</td>
-                                    <td>555</td>
-                                    <td>Especialidad</td>
+                                    <td>22.222.222-2</td>
+                                    <td>Nombre Med1</td>
+                                    <td>4.444.444-4</td>
+                                    <td>Nombre Paciente1</td>
+                                    <td>666</td>
+                                    <td>Medicamento1</td>
+                                    <td>Id Medicamento1</td>
+                                    <td>Duracion Tratamiento</td>
                                     <td>
                                         <a href="#" class='btn btn-info'><i class="fas fa-edit"></i></a>
                                         <button type="submit" class="btn btn-danger" onclick="return confirm('¿Estas seguro que deseas eliminar el registro?')"> <i class="fas fa-times-circle"></i> </button>
@@ -59,10 +59,7 @@
                                 </tr>
                             </tbody>
                         </table>
-
                     </div> 
-                    
-                    
             </div>
         </div>
     </div>

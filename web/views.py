@@ -67,6 +67,18 @@ def medicos(request):
 def medicos_add(request):
     return render(request, 'web/medicos_add.html')
 
+def pacientes(request):
+    return render(request, 'web/pacientes.html')
+
+def pacientes_add(request):
+    return render(request, 'web/pacientes_add.html')
+
+def prescripciones(request):
+    return render(request, 'web/prescripciones.html')
+
+def prescripciones_add(request):
+    return render(request, 'web/prescripciones_add.html')
+
 
 # ---------------------------------------------------------------- #
 # --------------------FUNCIONES CONECCIÓN API--------------------- #
