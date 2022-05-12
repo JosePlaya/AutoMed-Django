@@ -1,6 +1,9 @@
+import json
 import requests
+from django.core import serializers
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
+from .forms import PostNewMedicamentoForm
 from django.shortcuts import render
 #from pyrebase import pyrebase
 
@@ -68,6 +71,62 @@ def medicos_add(request):
 # ---------------------------------------------------------------- #
 # --------------------FUNCIONES CONECCIÓN API--------------------- #
 # ---------------------------------------------------------------- #
+   
+# ------------------------------------------------- #
+#                      USUARIOS                     #
+# ------------------------------------------------- #
+# NUEVO USUARIO
+def postNewUser(request):
+    print('Iniciando post new user...')
+    print(request)
+    url = urlAPI+"usuario"
+    payload = json.dumps(request)
+    headers = {
+        'Content-Type': 'application/json'
+    }
+    response = requests.request("POST", url, headers=headers, data=payload)
+    print(response.text)
+    return
+
+# OBTENER USUARIOS POR TIPO
+def getUserByType(request, type):
+    url = urlAPI+"usuarios/"+type
+    payload={}
+    headers = {
+      'Content-Type': 'application/json'
+    }
+    response = requests.request("GET", url, headers=headers, data=payload)
+    print(response.text)
+
+# OBTENER INFORMACIÓN DE UN USUARIO
+def getUser(request, id):
+    print('Iniciando get usuario...')
+    url = urlAPI+"usuario/"+id
+    payload={}
+    headers = {
+        'Content-Type': 'application/json'
+    }
+    response = requests.request("GET", url, headers=headers, data=payload)
+    r = response.json()
+    return HttpResponse(r['tipoUsuario'])
+
+# OBTENER INFORMACIÓN DE UN USUARIO
+def getUser_idCentroAtencion(request, id):
+    print('Iniciando get usuario...')
+    url = urlAPI+"usuario/"+id
+    payload={}
+    headers = {
+        'Content-Type': 'application/json'
+    }
+    response = requests.request("GET", url, headers=headers, data=payload)
+    r = response.json()
+    return HttpResponse(r['idCentroAtencion'])
+
+
+# ------------------------------------------------- #
+#                     CENTORS                       #
+# ------------------------------------------------- #
+# CREAR NUEVO CENTRO
 
 # OBTENER LISTADO DE TODOS LOS CENTROS
 def getCentros():
@@ -78,33 +137,7 @@ def getCentros():
     headers = {}
     response = requests.request("GET", finalURL, headers=headers, data=payload)
     print(response.text)
-    
-# ------------------------------------------------- #
-#                      USUARIOS                     #
-# ------------------------------------------------- #
-# NEW USUARIO
-
-# OBTENER USUARIOS POR TIPO
-
-# OBTENER INFORMACIÓN DE UN USUARIO
-def getUser(request, id):
-    print('Iniciando get usuario...')
-    url = urlAPI+"usuario/"+id
-    payload={}
-    headers = {
-    'Content-Type': 'application/json'
-    }
-    response = requests.request("GET", url, headers=headers, data=payload)
-    r = response.json()
-    return HttpResponse(r['tipoUsuario'])
-
-
-# ------------------------------------------------- #
-#                     CENTORS                       #
-# ------------------------------------------------- #
-# CREAR NUEVO CENTRO
-
-# OBTENER TODOS LOS CENTRO
+    return
 
 # OBTENER UN CENTRO
 
@@ -131,17 +164,55 @@ def getUser(request, id):
 #                    MEDICAMENTOS                   \\
 # ------------------------------------------------- \\
 # CREAR NUEVO MEDICAMENTOS
+def postNewMedicamento(request):
+    print('Iniciando post new medicamento...')
+    if request.method == 'POST':
+        print('...es POST...')
+        # create a form instance and populate it with data from the request:
+        form = PostNewMedicamentoForm(request.POST)
+        print(form)
+        # check whether it's valid:
+        if form.is_valid():
+            # process the data in form.cleaned_data as required
+            print('Es valido')
+            # redirect to a new URL:
+            # data = serializers.serialize('json', request)
+            #print(data)
+            # url = urlAPI+"medicamentos/" 
+            # payload = json.dumps(form)
+            # headers = {
+            #     'Content-Type': 'application/json'
+            # }
+            # response = requests.request("POST", url, headers=headers, data=payload)
+            # print(response.text)
+            return HttpResponseRedirect('200')
+        else:
+            print('No es valido')
+            return HttpResponse('400')
+     # if a GET (or any other method) we'll create a blank form
+    else:
+        return HttpResponse('400')
 
 # OBTENER TODOS LOS MEDICAMENTOS
-def get_medicamentos():
-    print('Iniciando get medicamentos...')
-    url = "https://us-central1-automed-cl.cloudfunctions.net/webApi/medicamentos/"
+def getMedicamentos():
+    print('Iniciando get medicamentos (todos)...')
+    url = urlAPI+"medicamentos/"
     payload={}
     headers = {}
     response = requests.request("GET", url, headers=headers, data=payload)
     print(response.json())
+    return
 
 # OBTENER TODOS LOS MEDICAMENTOS DE UN CENTRO
+def getMedicamentosByCentroMedico(request, idCentroMedico):
+    print('Iniciando get medicamentos by centro medico...')
+    url = urlAPI+"medicamentos/"+idCentroMedico
+    payload={}
+    headers = {
+        'Content-Type': 'application/json'
+    }
+    response = requests.request("GET", url, headers=headers, data=payload)
+    print(response.json())
 
 # OBTENER UN MEDICAMENTO POR ID
 
