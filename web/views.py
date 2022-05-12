@@ -1,5 +1,6 @@
 import json
 import requests
+from django.http import Http404
 from django.core import serializers
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
@@ -35,7 +36,8 @@ def index(request):
     return render(request, 'web/index.html')
 
 def medicamentos(request):
-    return render(request, 'web/medicamentos.html')
+    medicamentos = getMedicamentos()
+    return render(request, 'web/medicamentos.html', {'medicamentos' : medicamentos})
 
 def medicamentos_add(request):
     return render(request, 'web/medicamentos_add.html')
@@ -124,7 +126,7 @@ def getUser(request, id):
 
 # OBTENER INFORMACIÓN DE UN USUARIO
 def getUser_idCentroAtencion(request, id):
-    print('Iniciando get usuario...')
+    print('Iniciando get di centro atención del usuario...')
     url = urlAPI+"usuario/"+id
     payload={}
     headers = {
@@ -132,7 +134,7 @@ def getUser_idCentroAtencion(request, id):
     }
     response = requests.request("GET", url, headers=headers, data=payload)
     r = response.json()
-    return HttpResponse(r['idCentroAtencion'])
+    return HttpResponse(r['idCentroMedico'])
 
 
 # ------------------------------------------------- #
@@ -179,31 +181,45 @@ def getCentros():
 def postNewMedicamento(request):
     print('Iniciando post new medicamento...')
     if request.method == 'POST':
-        print('...es POST...')
         # create a form instance and populate it with data from the request:
         form = PostNewMedicamentoForm(request.POST)
-        print(form)
         # check whether it's valid:
         if form.is_valid():
             # process the data in form.cleaned_data as required
-            print('Es valido')
-            # redirect to a new URL:
-            # data = serializers.serialize('json', request)
-            #print(data)
-            # url = urlAPI+"medicamentos/" 
-            # payload = json.dumps(form)
-            # headers = {
-            #     'Content-Type': 'application/json'
-            # }
-            # response = requests.request("POST", url, headers=headers, data=payload)
-            # print(response.text)
-            return HttpResponseRedirect('200')
+            data = {
+                "stock": form.cleaned_data['stock'],
+                "nombre": form.cleaned_data['nombre'],
+                "codigo": form.cleaned_data['codigo'],
+                "gramaje": form.cleaned_data['gramaje'],
+                "cantidad": form.cleaned_data['cantidad'],
+                "contenido": form.cleaned_data['contenido'],
+                "fabricante": form.cleaned_data['fabricante'],
+                "descripcion": form.cleaned_data['descripcion'],
+                "idCentroMedico": form.cleaned_data['idCentroMedico']
+            }
+            url = urlAPI+"medicamento/" 
+            payload = json.dumps(data)
+            headers = {
+                'Content-Type': 'application/json'
+            }
+            response = requests.request("POST", url, headers=headers, data=payload)
+            if response.ok:
+                print('OK')
+                medicamentos = getMedicamentos()
+                return render(request, 'web/medicamentos.html', {'medicamentos' : medicamentos})
+            else:
+                print('NO OK')
+                print(response)
+                try:
+                    print(response.raise_for_status())
+                except requests.exceptions.HTTPError as e:
+                    print(e)
+                return HttpResponse('<H1>Error en el formulario</H1>')
         else:
             print('No es valido')
-            return HttpResponse('400')
-     # if a GET (or any other method) we'll create a blank form
+            return HttpResponse('<H1>Error en el formulario</H1>')
     else:
-        return HttpResponse('400')
+        return HttpResponse('<H1>Error en el formulario</H1>')
 
 # OBTENER TODOS LOS MEDICAMENTOS
 def getMedicamentos():
@@ -213,7 +229,7 @@ def getMedicamentos():
     headers = {}
     response = requests.request("GET", url, headers=headers, data=payload)
     print(response.json())
-    return
+    return response.json()
 
 # OBTENER TODOS LOS MEDICAMENTOS DE UN CENTRO
 def getMedicamentosByCentroMedico(request, idCentroMedico):

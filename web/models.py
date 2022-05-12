@@ -88,4 +88,17 @@ class Usuario(models.Model):
         return self.nombreUsuario
 
 
+# MODELO MEDICAMENTOS
+class Medicamento(models.Model):
+    id = models.CharField(verbose_name='id_medicamento', max_length=30, primary_key=True)
+    stock = models.IntegerField(verbose_name='stock_medicamento')
+    nombre = models.CharField(verbose_name='nombre_medicamento', max_length=150)
+    codigo = models.CharField(verbose_name='codigo_medicamento', max_length=10)
+    gramaje = models.CharField(verbose_name='gramaje_medicamento', max_length=10)
+    cantidad = models.CharField(verbose_name='cantidad_medicamento', max_length=50)
+    contenido = models.CharField(verbose_name='contenido_medicamento', max_length=150)
+    fabricante = models.CharField(verbose_name='fabricante_medicamento', max_length=150)
+    descripcion = models.CharField(verbose_name='descripcion_medicamento', max_length=150)
+    idCentroMedico = models.CharField(verbose_name='id_centro_medico_medicamento', max_length=30)
+
 

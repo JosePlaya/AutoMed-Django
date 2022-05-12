@@ -19,48 +19,48 @@
                         {% csrf_token %}
                         <div class="row">
                             <div class="col-md-4">
-                                <label for="nombre_medicamento" class="control-label">Nombre</label>
-                                <input id="nombre_medicamento" class="form-control" required maxlength="100" name="nombre_medicamento" type="text">
+                                <label for="id_nombre" class="control-label">Nombre</label>
+                                <input id="id_nombre" class="form-control" maxlength="100" name="nombre" type="text" required>
                             </div>
                             <div class="col-md-4">
-                                <label for="codigo_medicamento" class="control-label">Código</label>
-                                <input id="codigo_medicamento" class="form-control" required maxlength="100" name="codigo_medicamento" type="text">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <label for="descripcion_medicamento" class="control-label">Descripción</label>
-                                <input id="descripcion_medicamento" class="form-control" required maxlength="100" name="descripcion_medicamento" type="text">
-                            </div>
-                            <div class="col-md-4">
-                                <label for="fabricante_medicamento" class="control-label">Fabricante</label>
-                                <input id="fabricante_medicamento" class="form-control" required maxlength="100" name="fabricante_medicamento" type="text">
+                                <label for="id_codigo" class="control-label">Código</label>
+                                <input id="id_codigo" class="form-control" maxlength="100" name="codigo" type="text" required>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-4">
-                                <label for="contenido_medicamento" class="control-label">Contenido</label>
-                                <input id="contenido_medicamento" class="form-control" required maxlength="100" name="contenido_medicamento" type="text">
+                                <label for="id_descripcion" class="control-label">Descripción</label>
+                                <input id="id_descripcion" class="form-control" maxlength="100" name="descripcion" type="text" required>
                             </div>
                             <div class="col-md-4">
-                                <label for="cantidad_medicamento" class="control-label">Cantidad</label>
-                                <input id="cantidad_medicamento" class="form-control" required maxlength="100" name="cantidad_medicamento" type="text">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <label for="gramaje_medicamento" class="control-label">Gramaje</label>
-                                <input id="gramaje_medicamento" class="form-control" required maxlength="100" name="gramaje_medicamento" type="text">
-                            </div>
-                            <div class="col-md-4">
-                                <label for="stock_medicamento" class="control-label">Stock</label>
-                                <input id="stock_medicamento" class="form-control" required maxlength="100" name="stock_medicamento" type="number">
+                                <label for="id_fabricante" class="control-label">Fabricante</label>
+                                <input id="id_fabricante" class="form-control" maxlength="100" name="fabricante" type="text" required>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-4">
-                                <label for="gramaje_medicamento" class="control-label">ID Centro médico</label>
-                                <input id="gramaje_medicamento" class="form-control" required maxlength="100" name="id_centro_medico_medicamento" type="text">
+                                <label for="id_contenido" class="control-label">Contenido</label>
+                                <input id="id_contenido" class="form-control" maxlength="100" name="contenido" type="text" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="id_cantidad" class="control-label">Cantidad</label>
+                                <input id="id_cantidad" class="form-control" maxlength="100" name="cantidad" type="text" required>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="id_gramaje" class="control-label">Gramaje</label>
+                                <input id="id_gramaje" class="form-control" maxlength="100" name="gramaje" type="text"required>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="id_stock" class="control-label">Stock</label>
+                                <input id="id_stock" class="form-control" maxlength="100" name="stock" type="number" required>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="id_idCentroMedico" class="control-label">ID Centro médico</label>
+                                <input id="id_idCentroMedico"class="form-control" type="text" name="idCentroMedico" maxlength="30" required>
                                 
                             </div>
                         </div>
@@ -83,95 +83,27 @@
             // Configuración credenciales acceso
             const firebaseApp = firebase.initializeApp(data.firebaseConfig);
             const db = firebaseApp.firestore();        
-            const user = firebase.auth().currentUser;
-            if (user) {
-                // User is signed in, see docs for a list of available properties
-                // https://firebase.google.com/docs/reference/js/firebase.User
-                // ...
-                console.log(user);
-            } else {
-                window.location.href = "/login"
-            }
+            //const user = firebase.auth
 
-            // Login
-            firebase.auth().signInWithEmailAndPassword(email, password)
-            .then((userCredential) => {
-                // Signed in
-                var user = userCredential.user;
-                console.log('¡SESIÓN INICIADA!');
-                // Obtener datos del usuario
-                // Redireccionar a la vista correspondiente
-                $.ajax({
-                  type:'GET',
-                  url:'/getUser_idCentroAtencion/'+user.uid,
-                  success: function(data) {                                                     
-                      console.log(data);
-                  }
-              });
-            })
-            .catch((error) => {
-                var errorCode = error.code;
-                var errorMessage = error.message;
-                console.log('ERROR: código: ', errorCode);
-                console.log('ERROR: mensaje: ', errorMessage);
-                // Mostrar mensaje de error de credenciales
-                // ...
-            });
-        });
-        
-        // LOG IN
-        function getIdCentroAtencion(){
-            console.log('iniciando getIdCentroAtencion()')
-            import(`../../static/funciones/config.js`).then((data) => {
-                // Configuración credenciales acceso
-                const firebaseApp = firebase.initializeApp(data.firebaseConfig);
-                const db = firebaseApp.firestore();
-                const auth = firebaseApp.auth();
-            
-                // Datos de entrada
-                const email = document.getElementById('emailUsuario').value;
-                const password = document.getElementById('passwordUsuario').value;
-    
-                // Login
-                firebase.auth().signInWithEmailAndPassword(email, password)
-                .then((userCredential) => {
-                    // Signed in
-                    var user = userCredential.user;
-                    console.log('¡SESIÓN INICIADA!');
-                    // Obtener datos del usuario
-                    // Redireccionar a la vista correspondiente
+            firebase.auth().onAuthStateChanged(function(user) {
+                if (user) {
+                    // User is signed in.
+                    // Se solicitan los datos del id del centro medico
                     $.ajax({
-                      type:'GET',
-                      url:'/getUser_idCentroAtencion/'+user.uid,
-                      success: function(data) {                                                     
-                          console.log(data);
-                      }
-                  });
-                })
-                .catch((error) => {
-                    var errorCode = error.code;
-                    var errorMessage = error.message;
-                    console.log('ERROR: código: ', errorCode);
-                    console.log('ERROR: mensaje: ', errorMessage);
-                    // Mostrar mensaje de error de credenciales
-                    // ...
-                });
+                        type:'GET',
+                        url:'/getUser_idCentroAtencion/'+user.uid,
+                        success: function(data) {                                           
+                            console.log(data)          
+                            document.getElementById('id_idCentroMedico').value = data;
+                            {% comment %} document.getElementById("id_idCentroMedico").disabled = true; {% endcomment %}
+                        }
+                    });
+                } else {
+                    // No user is signed in
+                    // Se redirige al login
+                    window.location.href = "/login"
+                }
             });
-        }
-    </script>
-    <script type="text/javascript">
-        document.onload = getIdCentroAtencion()
-        $(document).ready(function() {
-            console.log("DOCUMENTO CARGADO, EJECUTANDO...")
-            getIdCentroAtencion()
-        });
-        $(function() {
-            console.log("DOCUMENTO2 CARGADO, EJECUTANDO...")
-            getIdCentroAtencion()
-        });
-        window.addEventListener("DOMContentLoaded", function(event) {
-            console.log("DOCUMENTO3 CARGADO, EJECUTANDO...")
-            getIdCentroAtencion()
         });
     </script>
 {% endblock %}

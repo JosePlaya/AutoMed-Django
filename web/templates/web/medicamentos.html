@@ -29,34 +29,22 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                {%for medicamento in medicamentos %}
                                 <tr>
-                                    <td>Nombre1</td>
-                                    <td>Código1</td>
-                                    <td>Descripción1</td>
-                                    <td>Fabricante1</td>
-                                    <td>Contenido1</td>
-                                    <td>Cantidad1</td>
-                                    <td>Gramaje1</td>
-                                    <td>Stock1</td>
+                                    <td>{{medicamento.nombre}}</td>
+                                    <td>{{medicamento.codigo}}</td>
+                                    <td>{{medicamento.descripcion}}</td>
+                                    <td>{{medicamento.fabricante}}</td>
+                                    <td>{{medicamento.contenido}}</td>
+                                    <td>{{medicamento.cantidad}}</td>
+                                    <td>{{medicamento.gramos}}</td>
+                                    <td>{{medicamento.stock}}</td>
                                     <td>
                                         <a href="#" class='btn btn-info'><i class="fas fa-edit"></i></a>
                                         <button type="submit" class="btn btn-danger" onclick="return confirm('¿Estas seguro que deseas eliminar el registro?')"> <i class="fas fa-times-circle"></i> </button>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td>Nombre2</td>
-                                    <td>Código2</td>
-                                    <td>Descripción2</td>
-                                    <td>Fabricante2</td>
-                                    <td>Contenido2</td>
-                                    <td>Cantidad2</td>
-                                    <td>Gramaje2</td>
-                                    <td>Stock2</td>
-                                    <td>
-                                        <a href="#" class='btn btn-info'><i class="fas fa-edit"></i></a>
-                                        <button type="submit" class="btn btn-danger" onclick="return confirm('¿Estas seguro que deseas eliminar el registro?')"> <i class="fas fa-times-circle"></i> </button>
-                                    </td>
-                                </tr>
+                                {% endfor %}
                             </tbody>
                         </table>
                     </div> 

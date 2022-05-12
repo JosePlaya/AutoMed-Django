@@ -9,3 +9,13 @@ export const firebaseConfig = {
     appId: "1:509880148775:web:4e2309ac39885f7829ff02",
     measurementId: "G-GYY8CEF4NW"
 }
+
+// Configuración credenciales acceso
+// const firebaseApp = firebase.initializeApp(firebaseConfig);
+// const db = firebaseApp.firestore();
+
+
+export function returnAuth(){
+    const firebaseApp = firebase.initializeApp(firebaseConfig);
+    return auth = awaitfirebaseApp.auth();
+}
