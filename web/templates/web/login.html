@@ -101,18 +101,8 @@
                 $.ajax({
                   type:'GET',
                   url:'/getUser/'+user.uid,
-                  success: function(data) {                                                     
-                      switch(data){
-                        case "admin":
-                          window.location.href = "/index"
-                          break;
-                        case "medico":
-                          window.location.href = "/index"
-                          break;
-                        case "farmaceutico":
-                          window.location.href = "/index"
-                          break;
-                      }
+                  success: function(data) {
+                    window.location.href = "/index/"+data
                   }
               });
             })

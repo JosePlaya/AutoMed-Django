@@ -32,11 +32,11 @@ def farmaceutico(request):
 def administrador(request):
     return render(request, 'web/administrador.html')
     
-def index(request):
+def index(request, userType, idCentroMedico):
     return render(request, 'web/index.html')
 
-def medicamentos(request):
-    medicamentos = getMedicamentos()
+def medicamentos(request, idCentroMedico):
+    medicamentos = getMedicamentosByCentroMedico(request, idCentroMedico)
     return render(request, 'web/medicamentos.html', {'medicamentos' : medicamentos})
 
 def medicamentos_add(request):
@@ -121,8 +121,10 @@ def getUser(request, id):
         'Content-Type': 'application/json'
     }
     response = requests.request("GET", url, headers=headers, data=payload)
-    r = response.json()
-    return HttpResponse(r['tipoUsuario'])
+    rJSON = response.json()
+    tipoUsuario = rJSON['tipoUsuario']
+    idCentroMedico = rJSON['idCentroMedico']
+    return HttpResponse(tipoUsuario+'/'+idCentroMedico)
 
 # OBTENER INFORMACIÓN DE UN USUARIO
 def getUser_idCentroAtencion(request, id):
@@ -241,6 +243,7 @@ def getMedicamentosByCentroMedico(request, idCentroMedico):
     }
     response = requests.request("GET", url, headers=headers, data=payload)
     print(response.json())
+    return response.json()
 
 # OBTENER UN MEDICAMENTO POR ID
 
