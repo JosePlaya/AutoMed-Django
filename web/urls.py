@@ -54,3 +54,16 @@ urlpatterns = [
     path('getMedicamentos/', main_views.getMedicamentos, name="getMedicamentos"),
     path('getMedicamentosByCentroMedico/<str:idCentroMedico>', main_views.getMedicamentosByCentroMedico, name="getMedicamentosByCentroMedico"),
 ]
+
+# EAAKf5vBfUe0BANBju2n6AS0QUjSph0Ik8iTOvCrPWS9AMS08B3jMlZCfMX99dO881ieyIBoxgGyZCrIZAHc27lgvILK4nIi6PJUjmaZBPj5ZC5VZBSEufzG74ZANfXB5K3TNhQ7K7pGHrCyzvIeTzk0hNMdnIO9ZCOG1uuAk65xxxXsJZBrQZAwL2lOEkbap6C0wQmZAHTwQ6AoZCwZDZD
+# EAAKf5vBfUe0BAPmbfhYcElYR4Bf0QMeC5FvbcE9QbNSyaURTepbbF5f7N2OZBPSP4T5Y74pu8wFudkJERkAkFiaZCVovFCyqZBMTqp3jFMkiQrjps8IVJPRdoaKxy4uXttdK5zK1msZAgiLH5uWnLhQJGZCWYgS8uxFMgo2IoNeXjy2McjVmKZBBuKlQvpvvneIbxhdEOC6AZDZD
+
+# curl -i -X POST \
+# >   https://graph.facebook.com/v12.0/103925202324943/messages \
+# >   -H 'Authorization: Bearer 67b2d2f9709c36b64777f07a7e243fbe' \
+# >   -H 'Content-Type: application/json' \
+# >   -d '{ "messaging_product": "whatsapp", "to": "56976423354", "type": "template", "template": { "name": "hello_world", "language": { "code": "en_US" } } }'
+
+
+# curl -i -X GET 
+#   "https://graph.facebook.com/v13.0/110967794946398/businesses?access_token=EAAKf5vBfUe0BAPmbfhYcElYR4Bf0QMeC5FvbcE9QbNSyaURTepbbF5f7N2OZBPSP4T5Y74pu8wFudkJERkAkFiaZCVovFCyqZBMTqp3jFMkiQrjps8IVJPRdoaKxy4uXttdK5zK1msZAgiLH5uWnLhQJGZCWYgS8uxFMgo2IoNeXjy2McjVmKZBBuKlQvpvvneIbxhdEOC6AZDZD"
