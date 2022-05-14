@@ -4,7 +4,7 @@ from django.http import Http404
 from django.core import serializers
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
-from .forms import PostNewMedicamentoForm
+from .forms import PostNewMedicamentoForm, PostUpdateMedicamentoForm
 from django.shortcuts import render
 #from pyrebase import pyrebase
 
@@ -41,6 +41,10 @@ def medicamentos(request, idCentroMedico):
 
 def medicamentos_add(request):
     return render(request, 'web/medicamentos_add.html')
+
+def medicamentos_edit(request, idMedicamento):
+    medicamento = getMedicamentoById(request, idMedicamento)
+    return render(request, 'web/medicamentos_edit.html', {'medicamento' : medicamento})
 
 def articulos(request):
     return render(request, 'web/articulos.html')
@@ -246,13 +250,85 @@ def getMedicamentosByCentroMedico(request, idCentroMedico):
     return response.json()
 
 # OBTENER UN MEDICAMENTO POR ID
+def getMedicamentoById(request, idMedicamento):
+    print('Iniciando get medicamento by id...')
+    url = urlAPI+"medicamento-id/"+idMedicamento
+    payload={}
+    headers = {
+        'Content-Type': 'application/json'
+    }
+    response = requests.request("GET", url, headers=headers, data=payload)
+    print(response.json())
+    return response.json()
 
 # OBTENER UN MEDICAMENTO POR SU CÓDIGO
 
 # ACTUALIZAR UN MEDICAMENTO
+def postUpdateMedicamento(request):
+    print('Iniciando patch medicamento...')
+    if request.method == 'POST':
+        # create a form instance and populate it with data from the request:
+        form = PostUpdateMedicamentoForm(request.POST)
+        # check whether it's valid:
+        if form.is_valid():
+            # process the data in form.cleaned_data as required
+            data = {
+                "stock": form.cleaned_data['stock'],
+                "nombre": form.cleaned_data['nombre'],
+                "codigo": form.cleaned_data['codigo'],
+                "gramaje": form.cleaned_data['gramaje'],
+                "cantidad": form.cleaned_data['cantidad'],
+                "contenido": form.cleaned_data['contenido'],
+                "fabricante": form.cleaned_data['fabricante'],
+                "descripcion": form.cleaned_data['descripcion'],
+                "idCentroMedico": form.cleaned_data['idCentroMedico']
+            }
+            url = urlAPI+"medicamento/update/"+form.cleaned_data['id']
+            payload = json.dumps(data)
+            headers = {
+                'Content-Type': 'application/json'
+            }
+            response = requests.request("POST", url, headers=headers, data=payload)
+            if response.ok:
+                print('OK')
+                medicamentos = getMedicamentos()
+                return render(request, 'web/medicamentos.html', {'medicamentos' : medicamentos})
+            else:
+                print('NO OK')
+                print(response)
+                try:
+                    print(response.raise_for_status())
+                except requests.exceptions.HTTPError as e:
+                    print(e)
+                return HttpResponse('<div><div><H1>Error en el formulario.</H1></div><div><input class="btn btn-danger" type=button value="Cancelar" onClick="javascript:history.go(-1);"></div></div>')
+        else:
+            print('No es valido')
+            return HttpResponse('<div><div><H1>Formulario no es valido.</H1></div><div><input class="btn btn-danger" type=button value="Cancelar" onClick="javascript:history.go(-1);"></div></div>')
+    else:
+        return HttpResponse('<div><div><H1>Error interno, intente más tarde.</H1></div><div><input class="btn btn-danger" type=button value="Cancelar" onClick="javascript:history.go(-1);"></div></div>')
 
 # ELIMINAR MEDICAMENTO 
-
+def deleteMedicamento(request, idMedicamento):
+    print('Iniciando delete medicamento...')
+    url = urlAPI+"medicamento/"+idMedicamento
+    payload={}
+    headers = {
+    'Content-Type': 'application/json'
+    }
+    response = requests.request("DELETE", url, headers=headers, data=payload)
+    if response.ok:
+        print('OK: eliminado.')
+        medicamentos = getMedicamentos()
+        return render(request, 'web/medicamentos.html', {'medicamentos' : medicamentos})
+    else:
+        print('NO OK')
+        print(response)
+        try:
+            print(response.raise_for_status())
+        except requests.exceptions.HTTPError as e:
+            print(e)
+        return HttpResponse('<div><div><H1>Error interno, intente más tarde.</H1></div><div><input class="btn btn-danger" type=button value="Cancelar" onClick="javascript:history.go(-1);"></div></div>')
+    
 # OBTENER STOCK DE UN MEDICAMENTO POR ID
 
 # OBTENER STOCK DE UN MEDICAMENTO POR SU CÓDIGO

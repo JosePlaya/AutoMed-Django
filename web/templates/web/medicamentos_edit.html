@@ -2,7 +2,7 @@
 {% block content %}
 
 <section class="content-header">
-    <h1 class="pull-left">Agregar Medicamento</h1>
+    <h1 class="pull-left">Editar Medicamento</h1>
     <h1 class="pull-right">
     </h1>
 </section>
@@ -15,57 +15,60 @@
               <div class="row">
                   <div class="col-md-12">
 
-                    <form action="/postNewMedicamento/" method="POST">
+                    <form action="/postUpdateMedicamento/" method="POST">
                         {% csrf_token %}
                         <div class="row">
                             <div class="col-md-4">
                                 <label for="id_nombre" class="control-label">Nombre</label>
-                                <input id="id_nombre" class="form-control" maxlength="100" name="nombre" type="text" required>
+                                <input id="id_nombre" class="form-control" maxlength="100" name="nombre" type="text" required value="{{medicamento.nombre}}">
                             </div>
                             <div class="col-md-4">
                                 <label for="id_codigo" class="control-label">Código</label>
-                                <input id="id_codigo" class="form-control" maxlength="100" name="codigo" type="text" required>
+                                <input id="id_codigo" class="form-control" maxlength="100" name="codigo" type="text" required value="{{medicamento.codigo}}">
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-4">
                                 <label for="id_descripcion" class="control-label">Descripción</label>
-                                <input id="id_descripcion" class="form-control" maxlength="100" name="descripcion" type="text" required>
+                                <input id="id_descripcion" class="form-control" maxlength="100" name="descripcion" type="text" required value="{{medicamento.descripcion}}">
                             </div>
                             <div class="col-md-4">
                                 <label for="id_fabricante" class="control-label">Fabricante</label>
-                                <input id="id_fabricante" class="form-control" maxlength="100" name="fabricante" type="text" required>
+                                <input id="id_fabricante" class="form-control" maxlength="100" name="fabricante" type="text" required value="{{medicamento.fabricante}}">
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-4">
                                 <label for="id_contenido" class="control-label">Contenido</label>
-                                <input id="id_contenido" class="form-control" maxlength="100" name="contenido" type="text" required>
+                                <input id="id_contenido" class="form-control" maxlength="100" name="contenido" type="text" required value="{{medicamento.contenido}}">
                             </div>
                             <div class="col-md-4">
                                 <label for="id_cantidad" class="control-label">Cantidad</label>
-                                <input id="id_cantidad" class="form-control" maxlength="100" name="cantidad" type="text" required>
+                                <input id="id_cantidad" class="form-control" maxlength="100" name="cantidad" type="text" required value="{{medicamento.cantidad}}">
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-4">
                                 <label for="id_gramaje" class="control-label">Gramaje</label>
-                                <input id="id_gramaje" class="form-control" maxlength="100" name="gramaje" type="text"required>
+                                <input id="id_gramaje" class="form-control" maxlength="100" name="gramaje" type="text"required value="{{medicamento.gramaje}}">
                             </div>
                             <div class="col-md-4">
                                 <label for="id_stock" class="control-label">Stock</label>
-                                <input id="id_stock" class="form-control" maxlength="100" name="stock" type="number" required>
+                                <input id="id_stock" class="form-control" maxlength="100" name="stock" type="number" required value="{{medicamento.stock}}">
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-4">
                                 <label for="id_idCentroMedico" class="control-label">ID Centro médico</label>
-                                <input id="id_idCentroMedico"class="form-control" type="text" name="idCentroMedico" maxlength="30" required>
-                                
+                                <input id="id_idCentroMedico"class="form-control" type="text" name="idCentroMedico" maxlength="30" required value="{{medicamento.idCentroMedico}}" readonly>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="id_id" class="control-label">ID Medicamento</label>
+                                <input id="id_id"class="form-control" type="text" name="id" maxlength="30" required value="{{medicamento.id}}" readonly>
                             </div>
                         </div>
                         <div class="form-group col-sm-12" style="margin-top: 10px;">
-                            <input class="btn btn-primary" type="submit" value="Guardar"  name="postNewMedicamentoForm" maxlength="1000" required id="id_postNewMedicamentoForm">
+                            <input class="btn btn-primary" type="submit" value="Actualizar"  name="patchMedicamentoForm" maxlength="1000" required id="id_patchMedicamentoForm">
                             <input class="btn btn-danger" type=button value="Cancelar" onClick="javascript:history.go(-1);">
                         </div>
                     </form>
@@ -76,34 +79,4 @@
     <script src="https://www.gstatic.com/firebasejs/9.7.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.7.0/firebase-firestore-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.7.0/firebase-auth-compat.js"></script>
-    <script type="text/javascript">   
-        
-        import(`../../static/funciones/config.js`).then((data) => {
-            console.log('iniciando...')
-            // Configuración credenciales acceso
-            const firebaseApp = firebase.initializeApp(data.firebaseConfig);
-            const db = firebaseApp.firestore();        
-            //const user = firebase.auth
-
-            firebase.auth().onAuthStateChanged(function(user) {
-                if (user) {
-                    // User is signed in.
-                    // Se solicitan los datos del id del centro medico
-                    $.ajax({
-                        type:'GET',
-                        url:'/getUser_idCentroAtencion/'+user.uid,
-                        success: function(data) {                                           
-                            console.log(data)          
-                            document.getElementById('id_idCentroMedico').value = data;
-                            {% comment %} document.getElementById("id_idCentroMedico").disabled = true; {% endcomment %}
-                        }
-                    });
-                } else {
-                    // No user is signed in
-                    // Se redirige al login
-                    window.location.href = "/login"
-                }
-            });
-        });
-    </script>
 {% endblock %}

@@ -15,6 +15,7 @@
               <div class="row">
                     <div class="col-md-12">
                         <table id="table_id" class="display">
+                            <!-- ENCABEZADO TABLA -->
                             <thead>
                                 <tr>
                                     <th>Nombre</th>
@@ -28,6 +29,8 @@
                                     <th>Acción</th>
                                 </tr>
                             </thead>
+                            
+                            <!-- CUERPO TABLA -->
                             <tbody>
                                 {%for medicamento in medicamentos %}
                                 <tr>
@@ -40,8 +43,15 @@
                                     <td>{{medicamento.gramos}}</td>
                                     <td>{{medicamento.stock}}</td>
                                     <td>
-                                        <a href="#" class='btn btn-info'><i class="fas fa-edit"></i></a>
-                                        <button type="submit" class="btn btn-danger" onclick="return confirm('¿Estas seguro que deseas eliminar el registro?')"> <i class="fas fa-times-circle"></i> </button>
+                                        <center>
+                                            <!-- BTN EDITAR -->
+                                            <a href="{% url 'medicamentos_edit' medicamento.id %}" class='btn btn-info' style="margin-top:5px; margin-bottom:5px"><i class="fas fa-edit"></i></a>
+                                            <!-- BTN ELIMINAR -->
+                                            <form action="{% url 'deleteMedicamento' medicamento.id %}" method="post">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-danger" onclick="return confirm('¿Estas seguro que deseas eliminar el registro?')" margin="2px"> <i class="fas fa-times-circle"></i> </button>
+                                        </form>
+                                        </center>
                                     </td>
                                 </tr>
                                 {% endfor %}
@@ -52,4 +62,17 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+
+    function deleteMedicamento(id){
+        
+        console.log('Iniciando delete de: '+id);
+
+        import(`../../static/funciones/medicamentos.js`).then((data) => {
+            data.deleteMedicamento(id);
+        });
+    }
+
+</script>
+
 {% endblock %}

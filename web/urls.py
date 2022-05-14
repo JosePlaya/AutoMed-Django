@@ -1,6 +1,6 @@
 from . import views as main_views
 from django.urls import path
-from .views import login, index,test
+from .views import login, index, medicamentos_edit,test
 from .views import medico,farmaceutico,administrador
 from .views import medicamentos, medicamentos_add
 from .views import articulos, articulos_add
@@ -24,6 +24,7 @@ urlpatterns = [
     path('administrador/',administrador, name="administrador"),
     path('medicamentos/<str:idCentroMedico>', medicamentos, name="medicamentos"),
     path('medicamentos_add/',medicamentos_add, name="medicamentos_add"),
+    path('medicamentos_edit/<str:idMedicamento>',medicamentos_edit, name="medicamentos_edit"),
     path('articulos/',articulos, name="articulos"),
     path('articulos_add/',articulos_add, name="articulos_add"),
     path('centros_medicos/',centros_medicos, name="centros_medicos"),
@@ -51,8 +52,10 @@ urlpatterns = [
     
     # MEDICAMENTOS
     path('postNewMedicamento/', main_views.postNewMedicamento, name="postNewMedicamento"),
+    path('postUpdateMedicamento/', main_views.postUpdateMedicamento, name="postUpdateMedicamento"),
     path('getMedicamentos/', main_views.getMedicamentos, name="getMedicamentos"),
     path('getMedicamentosByCentroMedico/<str:idCentroMedico>', main_views.getMedicamentosByCentroMedico, name="getMedicamentosByCentroMedico"),
+    path('deleteMedicamento/<str:idMedicamento>', main_views.deleteMedicamento, name="deleteMedicamento"),
 ]
 
 # EAAKf5vBfUe0BANBju2n6AS0QUjSph0Ik8iTOvCrPWS9AMS08B3jMlZCfMX99dO881ieyIBoxgGyZCrIZAHc27lgvILK4nIi6PJUjmaZBPj5ZC5VZBSEufzG74ZANfXB5K3TNhQ7K7pGHrCyzvIeTzk0hNMdnIO9ZCOG1uuAk65xxxXsJZBrQZAwL2lOEkbap6C0wQmZAHTwQ6AoZCwZDZD

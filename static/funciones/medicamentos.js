@@ -1,38 +1,5 @@
 import { BASE_URL_API } from '../config.js';
 
-// $(document).ready(function() {
-//     console.log('INICIANDO REQUEST A LA API...');
-//     console.log(BASE_URL_API);
-//     var settings = {
-//         "url": BASE_URL_API+'/medicamentos',
-//         "method": "GET",
-//         "timeout": 0,
-//       };
-      
-//       $.ajax(settings).done(function (response) {
-//         console.log(response);
-//       });
-//     $('#medicamentos').DataTable({
-//         language: {
-//             "lengthMenu": "Mostrar _MENU_ registros",
-//             "zeroRecords": "No se encontraron resultados",
-//             "infoFiltered": "(filtrado de un total de _MAX_ registros)",
-//             "sSearch": "Buscar :",
-//             "sProcessing":"Procesando...",
-//             paginate: {
-//                 previous:   "Previo",
-//                 next:       "Siguiente",
-//             },
-//         },
-//         iDisplayLength: 50,
-//         responsive: "true",
-//         dom: 'Bfrtilp',
-//         "paging": true,
-//         "info":false,
-//         buttons:[]
-//     }); 
-// });
-
 function getMedicamentos(){
     console.log('INICIANDO REQUEST A LA API...');
     var xhr = new XMLHttpRequest();
@@ -50,4 +17,25 @@ function getMedicamentos(){
 }
 
 //Carga los datos automáticamente al iniciar la vista
-window.onload = getMedicamentos();
+//window.onload = getMedicamentos();
+
+
+export function deleteMedicamento(id){
+    console.log('INICIANDO REQUEST A LA API...');
+
+    urlDelete = BASE_URL_API + 'medicamento/' + id
+    
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    var requestOptions = {
+    method: 'DELETE',
+    headers: myHeaders,
+    redirect: 'follow'
+    };
+
+    fetch(urlDelete, requestOptions)
+    .then(response => response.text())
+    .then(result => console.log(result))
+    .catch(error => console.log('error', error));
+}
