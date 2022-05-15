@@ -15,20 +15,31 @@ urlpatterns = [
     # ----------------------------------------------------------------- #
     # ---------------------------- VISTAS ----------------------------- #
     # ----------------------------------------------------------------- #
+    # LOGIN
     path('',login, name="login"),
     path('login/',login, name="login"),
+    
+    # INDEX
     path('index/<str:userType>/<str:idCentroMedico>',index, name="index"),
-    path('test/',test, name="test"),
+    
+    # MEDICO
     path('medico/',medico, name="medico"),
+    # FARMACEUTICO
     path('farmaceutico/',farmaceutico, name="farmaceutico"),
+    # ADMIN
     path('administrador/',administrador, name="administrador"),
+    
+    # MEDICAMENTOS
     path('medicamentos/<str:idCentroMedico>', medicamentos, name="medicamentos"),
     path('medicamentos_add/',medicamentos_add, name="medicamentos_add"),
     path('medicamentos_edit/<str:idMedicamento>',medicamentos_edit, name="medicamentos_edit"),
-    path('articulos/',articulos, name="articulos"),
-    path('articulos_add/',articulos_add, name="articulos_add"),
+    # CENTROS MEDICOS
     path('centros_medicos/',centros_medicos, name="centros_medicos"),
     path('centros_medicos_add/',centros_medicos_add, name="centros_medicos_add"),
+    path('centros_medicos_edit/<str:idCentroMedico>',medicamentos_edit, name="centros_medicos_edit"),
+    # 
+    path('articulos/',articulos, name="articulos"),
+    path('articulos_add/',articulos_add, name="articulos_add"),
     path('farmaceuticos/',farmaceuticos, name="farmaceuticos"),
     path('farmaceuticos_add/',farmaceuticos_add, name="farmaceuticos_add"),
     path('medicos/',medicos, name="medicos"),
@@ -38,11 +49,14 @@ urlpatterns = [
     path('prescripciones/',prescripciones, name="prescripciones"),
     path('prescripciones_add/',prescripciones_add, name="prescripciones_add"),
     
+    path('test/',test, name="test"),
+    
     # ----------------------------------------------------------------- #
     # ---------------------------- MÉTODOS ---------------------------- #
     # ----------------------------------------------------------------- #
     # CENTROS
-    path('getCentros/', main_views.getCentros, name="getCentros"),
+    path('getCentros/', main_views.getCentrosMedicos, name="getCentros"),
+    path('deleteCentroMedico/<str:idCentroMedico>', main_views.deleteCentroMedico, name="deleteCentroMedico"),
     
     # USUARIOS
     path('postNewUser/', main_views.postNewUser, name="postNewUser"),

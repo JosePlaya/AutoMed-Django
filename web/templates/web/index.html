@@ -177,55 +177,62 @@
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-               <li class="nav-item has-treeview menu-open">
-                <a href="#" class="nav-link">
-                  <i class="nav-icon fa-regular fa-user"></i>
-                  <p>
-                    Administrador
-                    <i class="right fas fa-angle-left"></i>
-                  </p>
-                </a>
-                <ul class="nav nav-treeview">
-                  <li class="nav-item">
-                    <a href="{% url 'medicamentos' idCentroMedico=idCentroMedico %}" class="nav-link">
-                      <i class="far fa-circle nav-icon"></i>
-                      <p>Medicamentos</p>
-                    </a>
-                  </li>
+
+          <!-- ADMINISTRADOR -->
+          {%if userType == 'admin' %}
+            <li class="nav-item has-treeview menu-open">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fa-regular fa-user"></i>
+                <p>
+                  Administrador
+                  <i class="right fas fa-angle-left"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="{% url 'medicamentos' idCentroMedico=idCentroMedico %}" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Medicamentos</p>
+                  </a>
+                </li>
+              
+                <li class="nav-item">
+                  <a href="{% url 'articulos' %}" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Artículos</p>
+                  </a>
+                </li>
                 
-                  <li class="nav-item">
-                    <a href="{% url 'articulos' %}" class="nav-link">
-                      <i class="far fa-circle nav-icon"></i>
-                      <p>Artículos</p>
-                    </a>
-                  </li>
-                  
-                  <li class="nav-item">
-                    <a href="{% url 'centros_medicos' %}" class="nav-link">
-                      <i class="far fa-circle nav-icon"></i>
-                      <p>Centros Médicos</p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="{% url 'farmaceuticos' %}" class="nav-link">
-                      <i class="far fa-circle nav-icon"></i>
-                      <p>Farmacéuticos</p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="{% url 'medicos' %}" class="nav-link">
-                      <i class="far fa-circle nav-icon"></i>
-                      <p>Médicos</p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="{% url 'pacientes' %}" class="nav-link">
-                      <i class="far fa-circle nav-icon"></i>
-                      <p>*Pacientes*</p>
-                    </a>
-                  </li>
-                </ul>
-              </li>
+                <li class="nav-item">
+                  <a href="{% url 'centros_medicos' %}" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Centros Médicos</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="{% url 'farmaceuticos' %}" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Farmacéuticos</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="{% url 'medicos' %}" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Médicos</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="{% url 'pacientes' %}" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>*Pacientes*</p>
+                  </a>
+                </li>
+              </ul>
+            </li>
+          {% endif %}
+
+          <!-- FARMACEUTICO -->
+          {%if userType == 'farmaceutico' %}
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
               <i class="nav-icon fa-regular fa-address-book"></i>
@@ -315,8 +322,12 @@
               </li>
             </ul>
           </li>
+          {% endif %}
+
+          <!-- MEDICO -->
+          {%if userType == 'medico' %}
           <li class="nav-item has-treeview">
-            <a href="#" class="nav-link">
+            <a href="javascript:logout()" class="nav-link">
               <i class="nav-icon fa-solid fa-user-doctor"></i>
               <p>
                 Médico
@@ -374,6 +385,21 @@
               </li>             
             </ul>
           </li>
+          {% endif %}
+
+          <!-- CERRAR SESIÓN -->
+          <form action="javascript:logout()">
+            <li class="nav-item has-treeview">
+              <a class="nav-link">
+                <button type="submit" class="btn btn-dark">
+                  <i class="nav-icon fa fa-power-off"></i>
+                  <p>
+                    Cerrar sesión
+                  </p>  
+                </button>
+              </a>
+            </li>
+          </form>
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
@@ -465,6 +491,33 @@
 
   });
   } );
+</script>
+<script src="https://www.gstatic.com/firebasejs/9.7.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.7.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.7.0/firebase-auth-compat.js"></script>
+<script type="text/javascript">    
+  // LOGOUT
+  function logout(){
+    console.log("Start logout...")
+      import(`../../static/funciones/config.js`).then((data) => {
+          // Configuración credenciales acceso
+          const firebaseApp = firebase.initializeApp(data.firebaseConfig);
+          const db = firebaseApp.firestore();
+          const auth = firebaseApp.auth();
+
+          // logout
+          firebase.auth().signOut().then(() => {
+            // Sign-out successful.
+            window.location.href = "/login/"
+          }).catch((error) => {
+            // An error happened.
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            console.log('ERROR: código: ', errorCode);
+            console.log('ERROR: mensaje: ', errorMessage);
+          });
+      });
+  }
 </script>
 </body>
 </html>

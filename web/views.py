@@ -33,8 +33,22 @@ def administrador(request):
     return render(request, 'web/administrador.html')
     
 def index(request, userType, idCentroMedico):
-    return render(request, 'web/index.html')
+    print('userType: '+userType)
+    return render(request, 'web/index.html', {'userType' : userType})
+#
 
+
+# CENTROS MEDICOS
+def centros_medicos(request):
+    centrosMedicos = getCentrosMedicos()
+    return render(request, 'web/centros_medicos.html', {'centrosMedicos' : centrosMedicos})
+
+def centros_medicos_add(request):
+    return render(request, 'web/centros_medicos_add.html')
+#
+
+#
+# MEDICAMENTOS
 def medicamentos(request, idCentroMedico):
     medicamentos = getMedicamentosByCentroMedico(request, idCentroMedico)
     return render(request, 'web/medicamentos.html', {'medicamentos' : medicamentos})
@@ -45,18 +59,16 @@ def medicamentos_add(request):
 def medicamentos_edit(request, idMedicamento):
     medicamento = getMedicamentoById(request, idMedicamento)
     return render(request, 'web/medicamentos_edit.html', {'medicamento' : medicamento})
+#
 
+
+# ARTICULOS
 def articulos(request):
     return render(request, 'web/articulos.html')
 
 def articulos_add(request):
     return render(request, 'web/articulos_add.html')
-
-def centros_medicos(request):
-    return render(request, 'web/centros_medicos.html')
-
-def centros_medicos_add(request):
-    return render(request, 'web/centros_medicos_add.html')
+#
 
 def farmaceuticos(request):
     return render(request, 'web/farmaceuticos.html')
@@ -146,20 +158,41 @@ def getUser_idCentroAtencion(request, id):
 # ------------------------------------------------- #
 #                     CENTORS                       #
 # ------------------------------------------------- #
-# CREAR NUEVO CENTRO
+# CREAR NUEVO CENTRO MEDICO
 
-# OBTENER LISTADO DE TODOS LOS CENTROS
-def getCentros():
-    print('Iniciando get centros...')
+# OBTENER LISTADO DE TODOS LOS CENTROS MEDICOS
+def getCentrosMedicos():
+    print('Iniciando get centros medicos...')
     extencion = "centros/"
     finalURL = urlAPI+extencion
     payload={}
     headers = {}
     response = requests.request("GET", finalURL, headers=headers, data=payload)
-    print(response.text)
-    return
+    return response.json()
 
-# OBTENER UN CENTRO
+# OBTENER UN CENTRO MEDICO
+
+# ELIMINAR UN CENTRO MEDICO 
+def deleteCentroMedico(request, idCentroMedico):
+    print('Iniciando delete centro medico...')
+    url = urlAPI+"centro/"+idCentroMedico
+    payload={}
+    headers = {
+    'Content-Type': 'application/json'
+    }
+    response = requests.request("DELETE", url, headers=headers, data=payload)
+    if response.ok:
+        print('OK: eliminado.')
+        centrosMedicos = getCentrosMedicos()
+        return render(request, 'web/centros_medicos.html', {'centrosMedicos' : centrosMedicos})
+    else:
+        print('NO OK')
+        print(response)
+        try:
+            print(response.raise_for_status())
+        except requests.exceptions.HTTPError as e:
+            print(e)
+        return HttpResponse('<div><div><H1>Error interno, intente más tarde.</H1></div><div><input class="btn btn-danger" type=button value="Cancelar" onClick="javascript:history.go(-1);"></div></div>')
 
 
 
@@ -234,7 +267,6 @@ def getMedicamentos():
     payload={}
     headers = {}
     response = requests.request("GET", url, headers=headers, data=payload)
-    print(response.json())
     return response.json()
 
 # OBTENER TODOS LOS MEDICAMENTOS DE UN CENTRO

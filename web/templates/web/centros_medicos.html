@@ -26,28 +26,26 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                {%for centro in centrosMedicos %}
                                 <tr>
-                                    <td>Nombre1</td>
-                                    <td>Dirección1</td>
-                                    <td>Región1</td>
-                                    <td>Comuna1</td>
-                                    <td>Tipo1</td>
+                                    <td>{{centro.nombre}}</td>
+                                    <td>{{centro.direccion}}</td>
+                                    <td>{{centro.region}}</td>
+                                    <td>{{centro.comuna}}</td>
+                                    <td>{{centro.tipo}}</td>
                                     <td>
-                                        <a href="#" class='btn btn-info'><i class="fas fa-edit"></i></a>
-                                        <button type="submit" class="btn btn-danger" onclick="return confirm('¿Estas seguro que deseas eliminar el registro?')"> <i class="fas fa-times-circle"></i> </button>
+                                        <center>
+                                            <!-- BTN EDITAR -->
+                                            <a href="{% url 'centros_medicos_edit' centro.id %}" class='btn btn-info' style="margin-top:5px; margin-bottom:5px"><i class="fas fa-edit"></i></a>
+                                            <!-- BTN ELIMINAR -->
+                                            <form action="{% url 'deleteCentroMedico' centro.id %}" method="post">
+                                                {% csrf_token %}
+                                                <button type="submit" class="btn btn-danger" onclick="return confirm('¿Estas seguro que deseas eliminar el registro?')" margin="2px"> <i class="fas fa-times-circle"></i> </button>
+                                            </form>
+                                        </center>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td>Nombre2</td>
-                                    <td>Dirección2</td>
-                                    <td>Región2</td>
-                                    <td>Comuna2</td>
-                                    <td>Tipo2</td>
-                                    <td>
-                                        <a href="#" class='btn btn-info'><i class="fas fa-edit"></i></a>
-                                        <button type="submit" class="btn btn-danger" onclick="return confirm('¿Estas seguro que deseas eliminar el registro?')"> <i class="fas fa-times-circle"></i> </button>
-                                    </td>
-                                </tr>
+                                {% endfor %}
                             </tbody>
                         </table>
 
