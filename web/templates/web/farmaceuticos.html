@@ -1,9 +1,9 @@
 {% extends "web/index.html" %}
 {% block content %}
 <section class="content-header">
-    <h1 class="pull-left">Falta detalles de los campos de los farmaceuticos</h1>
+    <h1 class="pull-left">Farmaceuticos</h1>
     <h1 class="pull-right" align="right">
-        <a class="btn btn-primary pull-right" style="margin-top: -10px;margin-bottom: 5px" href="#">Agregar</a>
+        <a class="btn btn-primary pull-right" style="margin-top: -10px;margin-bottom: 5px" href="{% url 'user_add' userType=userType newUserType='farmaceutico' idCentroMedico=idCentroMedico %}">Agregar</a>
      </h1>
 </section>
 <div class="content">
@@ -17,19 +17,37 @@
                         <table id="table_id" class="display">
                             <thead>
                                 <tr>
-                                    <th>Column 1</th>
-                                    <th>Column 2</th>
+                                    <th>Rut</th>
+                                    <th>Nombres</th>
+                                    <th>Apellidos</th>
+                                    <th>Correo</th>
+                                    <th>Centro Medico</th>
+                                    <th>Acción</th>
                                 </tr>
                             </thead>
+                            
+                            <!-- CUERPO TABLA -->
                             <tbody>
+                                {%for farmaceutico in farmaceuticos %}
                                 <tr>
-                                    <td>Row 1 Data 1</td>
-                                    <td>Row 1 Data 2</td>
+                                    <td>{{farmaceutico.rut}}</td>
+                                    <td>{{farmaceutico.nombre}}</td>
+                                    <td>{{farmaceutico.apaterno}} {{farmaceutico.amaterno}}</td>
+                                    <td>{{farmaceutico.correo}}</td>
+                                    <td>{{farmaceutico.idCentroMedico}}</td>
+                                    <td>
+                                        <center>
+                                            <!-- BTN EDITAR -->
+                                            <a href="{% url 'login' %}" class='btn btn-info' style="margin-top:5px; margin-bottom:5px"><i class="fas fa-edit"></i></a>
+                                            <!-- BTN ELIMINAR -->
+                                            <form action="{% url 'login' %}" method="post">
+                                                {% csrf_token %}
+                                                <button type="submit" class="btn btn-danger" onclick="return confirm('¿Estas seguro que deseas eliminar el registro?')" margin="2px"> <i class="fas fa-times-circle"></i> </button>
+                                            </form>
+                                        </center>
+                                    </td>
                                 </tr>
-                                <tr>
-                                    <td>Row 2 Data 1</td>
-                                    <td>Row 2 Data 2</td>
-                                </tr>
+                                {% endfor %}
                             </tbody>
                         </table>
 

@@ -102,7 +102,8 @@
                   type:'GET',
                   url:'/getUser/'+user.uid,
                   success: function(data) {
-                    window.location.href = "/index/"+data
+                    var d = data.split('/')
+                    window.location.href = d[0]+"/index/"
                   }
               });
             })

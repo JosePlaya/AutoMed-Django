@@ -1,12 +1,12 @@
 from . import views as main_views
 from django.urls import path
-from .views import login, index, medicamentos_edit,test
+from .views import login, index, medicamentos_edit,test, user_add
 from .views import medico,farmaceutico,administrador
 from .views import medicamentos, medicamentos_add
 from .views import articulos, articulos_add
 from .views import centros_medicos, centros_medicos_add
-from .views import farmaceuticos, farmaceuticos_add
-from .views import medicos, medicos_add
+from .views import farmaceuticos
+from .views import medicos
 from .views import pacientes, pacientes_add
 from .views import prescripciones, prescripciones_add
 
@@ -20,34 +20,39 @@ urlpatterns = [
     path('login/',login, name="login"),
     
     # INDEX
-    path('index/<str:userType>/<str:idCentroMedico>',index, name="index"),
+    path('<str:userType>/index/',index, name="index"),
     
     # MEDICO
-    path('medico/',medico, name="medico"),
+    path('/<str:userType>/medico/',medico, name="medico"),
     # FARMACEUTICO
-    path('farmaceutico/',farmaceutico, name="farmaceutico"),
+    path('<str:userType>/farmaceutico/',farmaceutico, name="farmaceutico"),
     # ADMIN
-    path('administrador/',administrador, name="administrador"),
+    path('<str:userType>/administrador/',administrador, name="administrador"),
     
     # MEDICAMENTOS
-    path('medicamentos/<str:idCentroMedico>', medicamentos, name="medicamentos"),
-    path('medicamentos_add/',medicamentos_add, name="medicamentos_add"),
-    path('medicamentos_edit/<str:idMedicamento>',medicamentos_edit, name="medicamentos_edit"),
+    path('<str:userType>/medicamentos/<str:idCentroMedico>', medicamentos, name="medicamentos"),
+    path('<str:userType>/medicamentos_add/',medicamentos_add, name="medicamentos_add"),
+    path('<str:userType>/medicamentos_edit/<str:idMedicamento>',medicamentos_edit, name="medicamentos_edit"),
     # CENTROS MEDICOS
-    path('centros_medicos/',centros_medicos, name="centros_medicos"),
-    path('centros_medicos_add/',centros_medicos_add, name="centros_medicos_add"),
-    path('centros_medicos_edit/<str:idCentroMedico>',medicamentos_edit, name="centros_medicos_edit"),
+    path('<str:userType>/centros_medicos/',centros_medicos, name="centros_medicos"),
+    path('<str:userType>/centros_medicos_add/',centros_medicos_add, name="centros_medicos_add"),
+    path('<str:userType>/centros_medicos_edit/<str:idCentroMedico>',medicamentos_edit, name="centros_medicos_edit"),
     # 
     path('articulos/',articulos, name="articulos"),
     path('articulos_add/',articulos_add, name="articulos_add"),
-    path('farmaceuticos/',farmaceuticos, name="farmaceuticos"),
-    path('farmaceuticos_add/',farmaceuticos_add, name="farmaceuticos_add"),
-    path('medicos/',medicos, name="medicos"),
-    path('medicos_add/',medicos_add, name="medicos_add"),
+    # FARMACEUTICOS
+    path('<str:userType>/farmaceuticos/',farmaceuticos, name="farmaceuticos"),
+    path('<str:userType>/farmaceuticos_edit/<str:idUsuario>',medicamentos_edit, name="farmaceuticos_edit"),
+    # MEDICOS
+    path('<str:userType>/medicos/',medicos, name="medicos"),
+    path('<str:userType>/medicos_edit/<str:idUsuario>',medicamentos_edit, name="medicos_edit"),
+    #
     path('pacientes/',pacientes, name="pacientes"),
     path('pacientes_add/',pacientes_add, name="pacientes_add"),
     path('prescripciones/',prescripciones, name="prescripciones"),
     path('prescripciones_add/',prescripciones_add, name="prescripciones_add"),
+    
+    path('<str:userType>/user_add/<str:newUserType>/<str:idCentroMedico>/', user_add, name="user_add"),
     
     path('test/',test, name="test"),
     

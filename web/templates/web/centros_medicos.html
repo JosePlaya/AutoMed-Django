@@ -3,7 +3,7 @@
 <section class="content-header">
     <h1 class="pull-left">Centros medicos</h1>
     <h1 class="pull-right" align="right">
-        <a class="btn btn-primary pull-right" style="margin-top: -10px;margin-bottom: 5px" href="{% url 'centros_medicos_add' %}">Agregar</a>
+        <a class="btn btn-primary pull-right" style="margin-top: -10px;margin-bottom: 5px" href="{% url 'centros_medicos_add' userType=userType%}">Agregar</a>
      </h1>
 </section>
 <div class="content">
@@ -36,7 +36,7 @@
                                     <td>
                                         <center>
                                             <!-- BTN EDITAR -->
-                                            <a href="{% url 'centros_medicos_edit' centro.id %}" class='btn btn-info' style="margin-top:5px; margin-bottom:5px"><i class="fas fa-edit"></i></a>
+                                            <a href="{% url 'centros_medicos_edit' userType centro.id %}" class='btn btn-info' style="margin-top:5px; margin-bottom:5px"><i class="fas fa-edit"></i></a>
                                             <!-- BTN ELIMINAR -->
                                             <form action="{% url 'deleteCentroMedico' centro.id %}" method="post">
                                                 {% csrf_token %}

@@ -4,7 +4,7 @@ from django.http import Http404
 from django.core import serializers
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
-from .forms import PostNewMedicamentoForm, PostUpdateMedicamentoForm
+from .forms import PostNewMedicamentoForm, PostUpdateMedicamentoForm, PostNewUser
 from django.shortcuts import render
 #from pyrebase import pyrebase
 
@@ -23,42 +23,52 @@ def test(request):
 def login(request):
     return render(request, 'web/login.html')
 
-def medico(request):
-    return render(request, 'web/medico.html')
+def medico(request, userType):
+    return render(request, 'web/medico.html', {'userType' : userType})
 
-def farmaceutico(request):
-    return render(request, 'web/farmaceutico.html')
+def farmaceutico(request, userType):
+    return render(request, 'web/farmaceutico.html', {'userType' : userType})
 
-def administrador(request):
-    return render(request, 'web/administrador.html')
+def administrador(request, userType):
+    return render(request, 'web/administrador.html', {'userType' : userType})
     
-def index(request, userType, idCentroMedico):
-    print('userType: '+userType)
-    return render(request, 'web/index.html', {'userType' : userType})
+def index(request, userType):
+    return render(request, 'web/index.html', {
+        'userType' : userType
+        })
 #
 
 
 # CENTROS MEDICOS
-def centros_medicos(request):
+def centros_medicos(request, userType):
     centrosMedicos = getCentrosMedicos()
-    return render(request, 'web/centros_medicos.html', {'centrosMedicos' : centrosMedicos})
+    return render(request, 'web/centros_medicos.html', {
+        'userType' : userType,
+        'centrosMedicos' : centrosMedicos
+        })
 
-def centros_medicos_add(request):
-    return render(request, 'web/centros_medicos_add.html')
+def centros_medicos_add(request, userType):
+    return render(request, 'web/centros_medicos_add.html', {'userType' : userType})
 #
 
 #
 # MEDICAMENTOS
-def medicamentos(request, idCentroMedico):
+def medicamentos(request, userType, idCentroMedico):
     medicamentos = getMedicamentosByCentroMedico(request, idCentroMedico)
-    return render(request, 'web/medicamentos.html', {'medicamentos' : medicamentos})
+    return render(request, 'web/medicamentos.html', {
+        'userType' : userType,
+        'medicamentos' : medicamentos
+        })
 
-def medicamentos_add(request):
-    return render(request, 'web/medicamentos_add.html')
+def medicamentos_add(request, userType):
+    return render(request, 'web/medicamentos_add.html', {'userType' : userType})
 
-def medicamentos_edit(request, idMedicamento):
+def medicamentos_edit(request, userType, idMedicamento):
     medicamento = getMedicamentoById(request, idMedicamento)
-    return render(request, 'web/medicamentos_edit.html', {'medicamento' : medicamento})
+    return render(request, 'web/medicamentos_edit.html', {
+        'userType' : userType,
+        'medicamento' : medicamento
+        })
 #
 
 
@@ -70,32 +80,47 @@ def articulos_add(request):
     return render(request, 'web/articulos_add.html')
 #
 
-def farmaceuticos(request):
-    return render(request, 'web/farmaceuticos.html')
+# FARMACEUTICO
+def farmaceuticos(request, userType):
+    farmaceuticos = getUserByType('farmaceutico')
+    return render(request, 'web/farmaceuticos.html', {
+        'userType' : userType,
+        'farmaceuticos' : farmaceuticos
+        })
+#
 
-def articulos_add(request):
-    return render(request, 'web/articulos_add.html')
+# MEDICO
+def medicos(request, userType):
+    medicos = getUserByType('medico')
+    return render(request, 'web/medicos.html', {
+        'userType' : userType,
+        'medicos' : medicos
+        })
 
-def farmaceuticos_add(request):
-    return render(request, 'web/farmaceuticos_add.html')
+# USUARIOS
+def user_add(request, userType, newUserType, idCentroMedico):
+    return render(request, 'web/user_add.html', {
+        'userType' : userType,
+        'newUserType': newUserType,
+        'idCentroMedico' : idCentroMedico
+        })
+#
 
-def medicos(request):
-    return render(request, 'web/medicos.html')
-
-def medicos_add(request):
-    return render(request, 'web/medicos_add.html')
-
+# PACIENTES
 def pacientes(request):
     return render(request, 'web/pacientes.html')
 
 def pacientes_add(request):
     return render(request, 'web/pacientes_add.html')
+#
 
+# PRESCRIPCIONES
 def prescripciones(request):
     return render(request, 'web/prescripciones.html')
 
 def prescripciones_add(request):
     return render(request, 'web/prescripciones_add.html')
+#
 
 
 # ---------------------------------------------------------------- #
@@ -108,25 +133,61 @@ def prescripciones_add(request):
 # NUEVO USUARIO
 def postNewUser(request):
     print('Iniciando post new user...')
-    print(request)
-    url = urlAPI+"usuario"
-    payload = json.dumps(request)
-    headers = {
-        'Content-Type': 'application/json'
-    }
-    response = requests.request("POST", url, headers=headers, data=payload)
-    print(response.text)
-    return
+    if request.method == 'POST':
+        # create a form instance and populate it with data from the request:
+        form = PostNewUser(request.POST)
+        # check whether it's valid:
+        if form.is_valid():
+            # process the data in form.cleaned_data as required
+            data = {
+                "rut": form.cleaned_data['rut'],
+                "nombre": form.cleaned_data['nombre'],
+                "correo": form.cleaned_data['correo'],
+                "apaterno": form.cleaned_data['apaterno'],
+                "amaterno": form.cleaned_data['amaterno'],
+                "tipoUsuario": form.cleaned_data['tipoUsuario'],
+                "password": form.cleaned_data['password'],
+                "especialidad": form.cleaned_data['especialidad'],
+                "idCentroMedico": form.cleaned_data['idCentroMedico']
+            }
+            url = urlAPI+"usuario/"
+            payload = json.dumps(data)
+            headers = {
+                'Content-Type': 'application/json'
+            }
+            response = requests.request("POST", url, headers=headers, data=payload)
+            if response.ok:
+                print('OK')
+                return render(request, 'web/index.html', {
+                    'userType' : 'administrador'
+                    })
+            else:
+                print('NO OK')
+                print(response)
+                try:
+                    print(response.raise_for_status())
+                except requests.exceptions.HTTPError as e:
+                    print(e)
+                return HttpResponse('<div><div><H1>Error interno, intente más tarde.</H1></div><div><input class="btn btn-danger" type=button value="Cancelar" onClick="javascript:history.go(-1);"></div></div>')
+        else:
+            print('No es valido')
+            return HttpResponse('<div><div><H1>Error interno, intente más tarde.</H1></div><div><input class="btn btn-danger" type=button value="Cancelar" onClick="javascript:history.go(-1);"></div></div>')
+    else:
+        return HttpResponse('<div><div><H1>Error interno, intente más tarde.</H1></div><div><input class="btn btn-danger" type=button value="Cancelar" onClick="javascript:history.go(-1);"></div></div>')
 
 # OBTENER USUARIOS POR TIPO
-def getUserByType(request, type):
+def getUserByType(type):
     url = urlAPI+"usuarios/"+type
     payload={}
     headers = {
       'Content-Type': 'application/json'
     }
     response = requests.request("GET", url, headers=headers, data=payload)
-    print(response.text)
+    if response.ok:
+        return response.json()
+    else:
+        return    
+    
 
 # OBTENER INFORMACIÓN DE UN USUARIO
 def getUser(request, id):
@@ -245,7 +306,10 @@ def postNewMedicamento(request):
             if response.ok:
                 print('OK')
                 medicamentos = getMedicamentos()
-                return render(request, 'web/medicamentos.html', {'medicamentos' : medicamentos})
+                return render(request, 'web/medicamentos.html', {
+                    'userType' : 'administrador',
+                    'medicamentos' : medicamentos
+                    })
             else:
                 print('NO OK')
                 print(response)
@@ -351,7 +415,10 @@ def deleteMedicamento(request, idMedicamento):
     if response.ok:
         print('OK: eliminado.')
         medicamentos = getMedicamentos()
-        return render(request, 'web/medicamentos.html', {'medicamentos' : medicamentos})
+        return render(request, 'web/medicamentos.html', {
+                'userType' : 'administrador',
+                'medicamentos' : medicamentos
+            })
     else:
         print('NO OK')
         print(response)
