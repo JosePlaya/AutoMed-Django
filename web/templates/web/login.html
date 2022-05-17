@@ -103,7 +103,7 @@
                   url:'/getUser/'+user.uid,
                   success: function(data) {
                     var d = data.split('/')
-                    window.location.href = d[0]+"/index/"
+                    window.location.href = d[0]+"/index/"+user.uid
                   }
               });
             })

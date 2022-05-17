@@ -3,7 +3,7 @@
 <section class="content-header">
     <h1 class="pull-left">Pacientes</h1>
     <h1 class="pull-right" align="right">
-        <a class="btn btn-primary pull-right" style="margin-top: -10px;margin-bottom: 5px" href="{% url 'pacientes_add' %}">Agregar</a>
+        <a class="btn btn-primary pull-right" style="margin-top: -10px;margin-bottom: 5px" href="{% url 'pacientes_add' %}">Nuevo</a>
      </h1>
 </section>
 <div class="content">
@@ -18,51 +18,38 @@
                             <thead>
                                 <tr>
                                     <th>Rut</th>
-                                    <th>Nombre</th>
-                                    <th>Apellido Paterno</th>
-                                    <th>Apellido Materno</th>
+                                    <th>Nombres</th>
+                                    <th>Apellidos</th>
                                     <th>Fecha Nacimiento</th>
                                     <th>Correo</th>
                                     <th>Teléfono</th>
-                                    <th>Notificación Correo</th>
-                                    <th>Notificación Whatsapp</th>
                                     <th>Color Cif</th>
                                     <th>Acción</th>
                                 </tr>
                             </thead>
                             <tbody>
+                                {%for paciente in pacientes %}
                                 <tr>
-                                    <td>11.111.111-9</td>
-                                    <td>Nombre1</td>
-                                    <td>Apaterno1</td>
-                                    <td>Amaterno1</td>
-                                    <td>01-01-1991</td>
-                                    <td>correo@correo.cl</td>
-                                    <td>+569-12345678</td>
-                                    <td>true</td>
-                                    <td>true</td>
-                                    <td>Azul</td>
+                                    <td>{{paciente.rut}}</td>
+                                    <td>{{paciente.nombre}}</td>
+                                    <td>{{paciente.apaterno}} {{paciente.amaterno}}</td>
+                                    <td>{{paciente.fechan}}</td>
+                                    <td>{{paciente.correo}}</td>
+                                    <td>{{paciente.telefono}}</td>
+                                    <td>{{paciente.color_cif}}</td>
                                     <td>
-                                        <a href="#" class='btn btn-info'><i class="fas fa-edit"></i></a>
-                                        <button type="submit" class="btn btn-danger" onclick="return confirm('¿Estas seguro que deseas eliminar el registro?')"> <i class="fas fa-times-circle"></i> </button>
+                                        <center>
+                                            <!-- BTN EDITAR -->
+                                            <a href="{% url 'login' %}" class='btn btn-info' style="margin-top:5px; margin-bottom:5px"><i class="fas fa-edit"></i></a>
+                                            <!-- BTN ELIMINAR -->
+                                            <form action="{% url 'login' %}" method="post">
+                                                {% csrf_token %}
+                                                <button type="submit" class="btn btn-danger" onclick="return confirm('¿Estas seguro que deseas eliminar el registro?')" margin="2px"> <i class="fas fa-times-circle"></i> </button>
+                                            </form>
+                                        </center>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td>22.222.222-9</td>
-                                    <td>Nombre2</td>
-                                    <td>Apaterno2</td>
-                                    <td>Amaterno2</td>
-                                    <td>02-02-1992</td>
-                                    <td>correo2@correo.cl</td>
-                                    <td>+569-87654321</td>
-                                    <td>false</td>
-                                    <td>false</td>
-                                    <td>verde</td>
-                                    <td>
-                                        <a href="#" class='btn btn-info'><i class="fas fa-edit"></i></a>
-                                        <button type="submit" class="btn btn-danger" onclick="return confirm('¿Estas seguro que deseas eliminar el registro?')"> <i class="fas fa-times-circle"></i> </button>
-                                    </td>
-                                </tr>
+                                {% endfor %}
                             </tbody>
                         </table>
                     </div> 

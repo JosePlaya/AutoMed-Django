@@ -1,11 +1,11 @@
 from . import views as main_views
 from django.urls import path
-from .views import login, index, medicamentos_edit,test, user_add
+from .views import login, index, medicamentos_edit, perfil,test, user_add
 from .views import medico,farmaceutico,administrador
 from .views import medicamentos, medicamentos_add
 from .views import articulos, articulos_add
 from .views import centros_medicos, centros_medicos_add
-from .views import farmaceuticos
+from .views import farmaceuticos, administradores
 from .views import medicos
 from .views import pacientes, pacientes_add
 from .views import prescripciones, prescripciones_add
@@ -20,7 +20,7 @@ urlpatterns = [
     path('login/',login, name="login"),
     
     # INDEX
-    path('<str:userType>/index/',index, name="index"),
+    path('<str:userType>/index/<str:uid>/',index, name="index"),
     
     # MEDICO
     path('/<str:userType>/medico/',medico, name="medico"),
@@ -40,15 +40,20 @@ urlpatterns = [
     # 
     path('articulos/',articulos, name="articulos"),
     path('articulos_add/',articulos_add, name="articulos_add"),
+    # ADMINISTRADORES
+    path('<str:userType>/administradores/',administradores, name="administradores"),
     # FARMACEUTICOS
     path('<str:userType>/farmaceuticos/',farmaceuticos, name="farmaceuticos"),
     path('<str:userType>/farmaceuticos_edit/<str:idUsuario>',medicamentos_edit, name="farmaceuticos_edit"),
     # MEDICOS
     path('<str:userType>/medicos/',medicos, name="medicos"),
     path('<str:userType>/medicos_edit/<str:idUsuario>',medicamentos_edit, name="medicos_edit"),
-    #
+    # PERFIL
+    path('<str:userType>/perfil/<str:uid>',perfil, name="perfil"),
+    # PACIENTES
     path('pacientes/',pacientes, name="pacientes"),
     path('pacientes_add/',pacientes_add, name="pacientes_add"),
+    # PRESCRIPCIONES
     path('prescripciones/',prescripciones, name="prescripciones"),
     path('prescripciones_add/',prescripciones_add, name="prescripciones_add"),
     
@@ -68,6 +73,7 @@ urlpatterns = [
     path('getUserByType/<str:type>', main_views.getUserByType, name="getUserByType"),
     path('getUser/<str:id>', main_views.getUser, name="getUser"),
     path('getUser_idCentroAtencion/<str:id>', main_views.getUser_idCentroAtencion, name="getUser_idCentroAtencion"),
+    path('deleteUsuario/<str:idUsuario>', main_views.deleteUsuario, name="deleteUsuario"),
     
     # MEDICAMENTOS
     path('postNewMedicamento/', main_views.postNewMedicamento, name="postNewMedicamento"),

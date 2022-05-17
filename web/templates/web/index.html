@@ -81,7 +81,7 @@
               </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="{% url 'medicamentos' userType idCentroMedico %}" class="nav-link">
+                  <a href="{% url 'administradores' userType=userType %}" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Administradores</p>
                   </a>
@@ -131,173 +131,158 @@
 
           <!-- FARMACEUTICO -->
           {%if userType == 'farmaceutico' %}
-          <li class="nav-item has-treeview">
-            <a href="{% url 'farmaceuticos' userType=userType %}" class="nav-link">
-              <i class="nav-icon fa-regular fa-address-book"></i>
-              <p>
-                Farmacéutico
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="{% url 'medicamentos' userType=userType idCentroMedico=idCentroMedico %}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Medicamentos</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{% url 'articulos' %}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Artículos</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{% url 'pacientes' %}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Pacientes</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Reservar Medicamento</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Listado Prescripciones</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Listado recetas</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Entrega de Medicamentos</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Solicitudes de Artículos</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Entrega de Artículos</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Agregar Stock Medicamentos</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Agregar Stock Artículos</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Reservar Medicamentos</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Listar Reservas</p>
-                </a>
-              </li>
-            </ul>
-          </li>
+            <li class="nav-item has-treeview">
+              <a href="{% url 'farmaceuticos' userType=userType %}" class="nav-link">
+                <i class="nav-icon fa-regular fa-address-book"></i>
+                <p>
+                  Farmacéutico
+                  <i class="right fas fa-angle-left"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="{% url 'medicamentos' userType=userType idCentroMedico=idCentroMedico %}" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Medicamentos</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="{% url 'articulos' %}" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Artículos</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="{% url 'pacientes' %}" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Pacientes</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="#" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Reservar Medicamento</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="#" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Listado Prescripciones</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="#" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Listado recetas</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="#" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Entrega de Medicamentos</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="#" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Solicitudes de Artículos</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="#" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Entrega de Artículos</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="#" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Agregar Stock Medicamentos</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="#" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Agregar Stock Artículos</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="#" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Reservar Medicamentos</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="#" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Listar Reservas</p>
+                  </a>
+                </li>
+              </ul>
+            </li>
           {% endif %}
 
           <!-- MEDICO -->
           {%if userType == 'medico' %}
-          <li class="nav-item has-treeview">
-            <a href="javascript:logout()" class="nav-link">
-              <i class="nav-icon fa-solid fa-user-doctor"></i>
+            <li class="nav-item has-treeview">
+              <a href="javascript:logout()" class="nav-link">
+                <i class="nav-icon fa-solid fa-user-doctor"></i>
+                <p>
+                  Médico
+                  <i class="right fas fa-angle-left"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="{% url 'pacientes' %}" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Pacientes</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="{% url 'prescripciones' %}" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Prescripciones</p>
+                  </a>
+                </li>             
+              </ul>
+            </li>
+          {% endif %}
+
+          <!-- PERFIL -->
+          <li class="nav-item has-treeview menu-open">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fa-regular fa-user"></i>
               <p>
-                Médico
+                Cuenta
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                {% comment %} <a href="{% url 'perfil' userType uid %}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Stock Farmacia</p>
-                </a>
+                  <p>Perfil</p>
+                </a> {% endcomment %}
               </li>
+              
               <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Paciente</p>
-                </a>
+                <!-- CERRAR SESIÓN -->
+                <form action="javascript:logout()">
+                  <li class="nav-item has-treeview">
+                    <a class="nav-link">
+                      <button type="submit" class="btn btn-dark">
+                        <i class="nav-icon fa fa-power-off"></i>
+                        <p>
+                          Cerrar sesión
+                        </p>  
+                      </button>
+                    </a>
+                  </li>
+                </form>
               </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Recetas</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Asignar Receta</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Reserva De Medicamentos</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Solicitud De Artículo</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{% url 'prescripciones' %}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Prescripciones</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Cancelación Reserva</p>
-                </a>
-              </li>             
             </ul>
           </li>
-          {% endif %}
-
-          <!-- CERRAR SESIÓN -->
-          <form action="javascript:logout()">
-            <li class="nav-item has-treeview">
-              <a class="nav-link">
-                <button type="submit" class="btn btn-dark">
-                  <i class="nav-icon fa fa-power-off"></i>
-                  <p>
-                    Cerrar sesión
-                  </p>  
-                </button>
-              </a>
-            </li>
-          </form>
         </ul>
       </nav>
       <!-- /.sidebar-menu -->

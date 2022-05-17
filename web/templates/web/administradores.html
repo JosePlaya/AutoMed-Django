@@ -1,9 +1,9 @@
 {% extends "web/index.html" %}
 {% block content %}
 <section class="content-header">
-    <h1 class="pull-left">Médicos</h1>
+    <h1 class="pull-left">Administradores</h1>
     <h1 class="pull-right" align="right">
-        <a class="btn btn-primary pull-right" style="margin-top: -10px;margin-bottom: 5px" href="{% url 'user_add' userType=userType newUserType='medico' idCentroMedico=idCentroMedico %}">Agregar</a>
+        <a class="btn btn-primary pull-right" style="margin-top: -10px;margin-bottom: 5px" href="{% url 'user_add' userType=userType newUserType='administrador' idCentroMedico=idCentroMedico %}">Agregar</a>
      </h1>
 </section>
 <div class="content">
@@ -11,6 +11,7 @@
         <div class="clearfix"></div>
         <div class="box box-primary">
             <div class="box-body">
+
               <div class="row">
                     <div class="col-md-12">
                         <table id="table_id" class="display">
@@ -19,7 +20,6 @@
                                     <th>Rut</th>
                                     <th>Nombres</th>
                                     <th>Apellidos</th>
-                                    <th>Especialidad</th>
                                     <th>Correo</th>
                                     <th>Centro Medico</th>
                                     <th>Acción</th>
@@ -28,20 +28,19 @@
                             
                             <!-- CUERPO TABLA -->
                             <tbody>
-                                {%for medico in medicos %}
+                                {%for administrador in administradores %}
                                 <tr>
-                                    <td>{{medico.rut}}</td>
-                                    <td>{{medico.nombre}}</td>
-                                    <td>{{medico.apaterno}} {{medico.amaterno}}</td>
-                                    <td>{{medico.especialidad}}</td>
-                                    <td>{{medico.correo}}</td>
-                                    <td>{{medico.idCentroMedico}}</td>
+                                    <td>{{administrador.rut}}</td>
+                                    <td>{{administrador.nombre}}</td>
+                                    <td>{{administrador.apaterno}} {{administrador.amaterno}}</td>
+                                    <td>{{administrador.correo}}</td>
+                                    <td>{{administrador.idCentroMedico}}</td>
                                     <td>
                                         <center>
                                             <!-- BTN EDITAR -->
                                             <a href="{% url 'login' %}" class='btn btn-info' style="margin-top:5px; margin-bottom:5px"><i class="fas fa-edit"></i></a>
                                             <!-- BTN ELIMINAR -->
-                                            <form action="{% url 'deleteUsuario' medico.id %}" method="post">
+                                            <form action="{% url 'deleteUsuario' administrador.id %}" method="post">
                                                 {% csrf_token %}
                                                 <button type="submit" class="btn btn-danger" onclick="return confirm('¿Estas seguro que deseas eliminar el registro?')" margin="2px"> <i class="fas fa-times-circle"></i> </button>
                                             </form>
@@ -51,7 +50,10 @@
                                 {% endfor %}
                             </tbody>
                         </table>
-                    </div>
+
+                    </div> 
+                    
+                    
             </div>
         </div>
     </div>

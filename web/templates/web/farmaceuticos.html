@@ -38,9 +38,9 @@
                                     <td>
                                         <center>
                                             <!-- BTN EDITAR -->
-                                            <a href="{% url 'login' %}" class='btn btn-info' style="margin-top:5px; margin-bottom:5px"><i class="fas fa-edit"></i></a>
+                                            <a href="{% url 'login'%}" class='btn btn-info' style="margin-top:5px; margin-bottom:5px"><i class="fas fa-edit"></i></a>
                                             <!-- BTN ELIMINAR -->
-                                            <form action="{% url 'login' %}" method="post">
+                                            <form action="{% url 'deleteUsuario' farmaceutico.id %}" method="post">
                                                 {% csrf_token %}
                                                 <button type="submit" class="btn btn-danger" onclick="return confirm('¿Estas seguro que deseas eliminar el registro?')" margin="2px"> <i class="fas fa-times-circle"></i> </button>
                                             </form>

@@ -32,10 +32,19 @@ def farmaceutico(request, userType):
 def administrador(request, userType):
     return render(request, 'web/administrador.html', {'userType' : userType})
     
-def index(request, userType):
+def index(request, userType, uid):
     return render(request, 'web/index.html', {
-        'userType' : userType
-        })
+        'userType' : userType,
+        'uid' : uid
+    })
+
+def perfil(request, userType, uid):
+    print('UID = '+uid)
+    usuario = getUser2(uid)
+    return render(request, 'web/perfil.html', {
+        'userType' : userType,
+        'usuario' : usuario
+    })
 #
 
 
@@ -81,6 +90,15 @@ def articulos_add(request):
 #
 
 # FARMACEUTICO
+def administradores(request, userType):
+    administradores = getUserByType('administrador')
+    return render(request, 'web/administradores.html', {
+        'userType' : userType,
+        'administradores' : administradores
+        })
+#
+
+# FARMACEUTICO
 def farmaceuticos(request, userType):
     farmaceuticos = getUserByType('farmaceutico')
     return render(request, 'web/farmaceuticos.html', {
@@ -108,7 +126,10 @@ def user_add(request, userType, newUserType, idCentroMedico):
 
 # PACIENTES
 def pacientes(request):
-    return render(request, 'web/pacientes.html')
+    pacientes = getPacientes()
+    return render(request, 'web/pacientes.html', {
+        'pacientes' : pacientes
+    })
 
 def pacientes_add(request):
     return render(request, 'web/pacientes_add.html')
@@ -150,6 +171,7 @@ def postNewUser(request):
                 "especialidad": form.cleaned_data['especialidad'],
                 "idCentroMedico": form.cleaned_data['idCentroMedico']
             }
+            print(data)
             url = urlAPI+"usuario/"
             payload = json.dumps(data)
             headers = {
@@ -168,12 +190,13 @@ def postNewUser(request):
                     print(response.raise_for_status())
                 except requests.exceptions.HTTPError as e:
                     print(e)
-                return HttpResponse('<div><div><H1>Error interno, intente más tarde.</H1></div><div><input class="btn btn-danger" type=button value="Cancelar" onClick="javascript:history.go(-1);"></div></div>')
+                return HttpResponse('<div><div><H1>Error interno, intente más tarde.</H1></div><div>Respuesta: ${response}</div><div>Error: ${e}</div><div><input class="btn btn-danger" type=button value="Cancelar" onClick="javascript:history.go(-1);"></div></div>')
         else:
             print('No es valido')
-            return HttpResponse('<div><div><H1>Error interno, intente más tarde.</H1></div><div><input class="btn btn-danger" type=button value="Cancelar" onClick="javascript:history.go(-1);"></div></div>')
+            print(form.errors)
+            return HttpResponse('<div><div><H1>Error interno, intente más tarde.</H1></div><div>Error: ${form.errors}</div><div><input class="btn btn-danger" type=button value="Cancelar" onClick="javascript:history.go(-1);"></div></div>')
     else:
-        return HttpResponse('<div><div><H1>Error interno, intente más tarde.</H1></div><div><input class="btn btn-danger" type=button value="Cancelar" onClick="javascript:history.go(-1);"></div></div>')
+        return HttpResponse('<div><div><H1>Formulario no válido, intente con nuevos valores.</H1></div><div><input class="btn btn-danger" type=button value="Cancelar" onClick="javascript:history.go(-1);"></div></div>')
 
 # OBTENER USUARIOS POR TIPO
 def getUserByType(type):
@@ -188,7 +211,6 @@ def getUserByType(type):
     else:
         return    
     
-
 # OBTENER INFORMACIÓN DE UN USUARIO
 def getUser(request, id):
     print('Iniciando get usuario...')
@@ -203,6 +225,16 @@ def getUser(request, id):
     idCentroMedico = rJSON['idCentroMedico']
     return HttpResponse(tipoUsuario+'/'+idCentroMedico)
 
+def getUser2(id):
+    print('Iniciando get usuario...')
+    url = urlAPI+"usuario/"+id
+    payload={}
+    headers = {
+        'Content-Type': 'application/json'
+    }
+    response = requests.request("GET", url, headers=headers, data=payload)
+    return response.json()
+
 # OBTENER INFORMACIÓN DE UN USUARIO
 def getUser_idCentroAtencion(request, id):
     print('Iniciando get di centro atención del usuario...')
@@ -215,6 +247,28 @@ def getUser_idCentroAtencion(request, id):
     r = response.json()
     return HttpResponse(r['idCentroMedico'])
 
+# ELIMINAR UN USUARIO
+def deleteUsuario(request, idUsuario):
+    print('Iniciando delete usuario...')
+    url = urlAPI+"usuario/"+idUsuario
+    payload={}
+    headers = {
+    'Content-Type': 'application/json'
+    }
+    response = requests.request("DELETE", url, headers=headers, data=payload)
+    if response.ok:
+        print('OK: eliminado.')
+        return render(request, 'web/index.html', {
+                    'userType' : 'administrador'
+                })
+    else:
+        print('NO OK')
+        print(response)
+        try:
+            print(response.raise_for_status())
+        except requests.exceptions.HTTPError as e:
+            print(e)
+        return HttpResponse('<div><div><H1>Error interno, intente más tarde.</H1></div><div>Respuesta: {response}</div><div>Error: {e}</div><div><input class="btn btn-danger" type=button value="Cancelar" onClick="javascript:history.go(-1);"></div></div>')
 
 # ------------------------------------------------- #
 #                     CENTORS                       #
@@ -263,6 +317,8 @@ def deleteCentroMedico(request, idCentroMedico):
 # CREAR NUEVO PACIENTE
 
 # OBTENER TODOS LOS PACIENTES
+def getPacientes():
+    return
 
 # OBTENER UN PACIENTE POR ID
 
