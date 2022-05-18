@@ -4,7 +4,7 @@ from django.http import Http404
 from django.core import serializers
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
-from .forms import PostNewMedicamentoForm, PostUpdateMedicamentoForm, PostNewUser
+from .forms import PostNewMedicamentoForm, PostUpdateMedicamentoForm, PostNewUser, PostNewPacienteForm, PostNewPrescripcionForm
 from django.shortcuts import render
 #from pyrebase import pyrebase
 
@@ -113,7 +113,7 @@ def medicos(request, userType):
     return render(request, 'web/medicos.html', {
         'userType' : userType,
         'medicos' : medicos
-        })
+    })
 
 # USUARIOS
 def user_add(request, userType, newUserType, idCentroMedico):
@@ -125,22 +125,31 @@ def user_add(request, userType, newUserType, idCentroMedico):
 #
 
 # PACIENTES
-def pacientes(request):
+def pacientes(request, userType):
     pacientes = getPacientes()
     return render(request, 'web/pacientes.html', {
+        'userType' : userType,
         'pacientes' : pacientes
     })
 
-def pacientes_add(request):
-    return render(request, 'web/pacientes_add.html')
+def pacientes_add(request, userType):
+    return render(request, 'web/pacientes_add.html', {
+        'userType' : userType,
+    })
 #
 
 # PRESCRIPCIONES
-def prescripciones(request):
-    return render(request, 'web/prescripciones.html')
+def prescripciones(request, userType):
+    return render(request, 'web/prescripciones.html', {
+        'userType' : userType,
+    })
 
-def prescripciones_add(request):
-    return render(request, 'web/prescripciones_add.html')
+def prescripciones_add(request, userType):
+    medicamentos = getMedicamentos()
+    return render(request, 'web/prescripciones_add.html', {
+        'userType' : userType,
+        'medicamentos' : medicamentos
+    })
 #
 
 
@@ -247,6 +256,18 @@ def getUser_idCentroAtencion(request, id):
     r = response.json()
     return HttpResponse(r['idCentroMedico'])
 
+# OBTENER INFORMACIÓN DE UN USUARIO
+def getUser_idCentroAtencionYRut(request, id):
+    print('Iniciando get di centro atención del usuario y rut...')
+    url = urlAPI+"usuario/"+id
+    payload={}
+    headers = {
+        'Content-Type': 'application/json'
+    }
+    response = requests.request("GET", url, headers=headers, data=payload)
+    r = response.json()
+    return HttpResponse(r['idCentroMedico']+'/'+r['rut'])
+
 # ELIMINAR UN USUARIO
 def deleteUsuario(request, idUsuario):
     print('Iniciando delete usuario...')
@@ -315,10 +336,69 @@ def deleteCentroMedico(request, idCentroMedico):
 #                     PACIENTES                     \\
 # ------------------------------------------------- \\
 # CREAR NUEVO PACIENTE
+def postNewPaciente(request):
+    print('Iniciando post new paciente...')
+    if request.method == 'POST':
+        # create a form instance and populate it with data from the request:
+        form = PostNewPacienteForm(request.POST)
+        # check whether it's valid:
+        if form.is_valid():
+            # process the data in form.cleaned_data as required
+            fechan = form.cleaned_data['fechan']
+            fechan = fechan.isoformat()
+            data = {
+                "rut": form.cleaned_data['rut'],
+                "fechan": fechan,
+                "correo": form.cleaned_data['correo'],
+                "nombre": form.cleaned_data['nombre'],
+                "apaterno": form.cleaned_data['apaterno'],
+                "amaterno": form.cleaned_data['amaterno'],
+                "telefono": form.cleaned_data['telefono'],
+                "not_wsp": form.cleaned_data['not_wsp'],
+                "not_cor": form.cleaned_data['not_cor'],
+                "color_cif": form.cleaned_data['color_cif']
+            }
+            url = urlAPI+"paciente/"
+            print(data)
+            payload = ''
+            try:
+                payload = json.dumps(data)
+            except requests.exceptions.HTTPError as e:
+                print(e)
+            headers = {
+                'Content-Type': 'application/json'
+            }
+            response = requests.request("POST", url, headers=headers, data=payload)
+            if response.ok:
+                print('OK')
+                pacientes = getPacientes()
+                return render(request, 'web/pacientes.html', {
+                    'userType' : 'medico',
+                    'pacientes' : pacientes
+                })
+            else:
+                print('NO OK')
+                print(response.text)
+                try:
+                    print(response.raise_for_status())
+                except requests.exceptions.HTTPError as e:
+                    print(e)
+                return HttpResponse('<div><div><H1>Formulario no válido, intente con nuevos valores.</H1></div><div><input class="btn btn-danger" type=button value="Cancelar" onClick="javascript:history.go(-1);"></div></div>')
+        else:
+            print('No es valido')
+            print(form.errors)
+            return HttpResponse('<div><div><H1>Formulario no válido, intente con nuevos valores.</H1></div><div><input class="btn btn-danger" type=button value="Cancelar" onClick="javascript:history.go(-1);"></div></div>')
+    else:
+        return HttpResponse('<div><div><H1>Formulario no válido, intente con nuevos valores.</H1></div><div><input class="btn btn-danger" type=button value="Cancelar" onClick="javascript:history.go(-1);"></div></div>')
 
 # OBTENER TODOS LOS PACIENTES
 def getPacientes():
-    return
+    print('Iniciando get pacientes...')
+    url = urlAPI+"pacientes/"
+    payload={}
+    headers = {}
+    response = requests.request("GET", url, headers=headers, data=payload)
+    return response.json()
 
 # OBTENER UN PACIENTE POR ID
 
@@ -495,6 +575,51 @@ def deleteMedicamento(request, idMedicamento):
 # ------------------------------------------------- \\
 #                    PREESCRIPCIÓN                  \\
 # ------------------------------------------------- \\
+# CREAR NUEVA PRESCRIPCIÓN
+def postNewPrescripcion(request):
+    print('Iniciando post new prescripción...')
+    if request.method == 'POST':
+        # create a form instance and populate it with data from the request:
+        form = PostNewPrescripcionForm(request.POST)
+        # check whether it's valid:
+        if form.is_valid():
+            # process the data in form.cleaned_data as required
+            data = {
+                "rutMedico": form.cleaned_data['rutMedico'],
+                "rutPaciente": form.cleaned_data['rutPaciente'],
+                "idCentroMedico": form.cleaned_data['idCentroMedico'],
+                "descripcion": form.cleaned_data['descripcion'],
+                "duracionTratamiento": form.cleaned_data['duracionTratamiento'],
+                "medicamentos": form.cleaned_data['medicamentos']
+            }
+            
+            print(data)
+            url = urlAPI+"prescripcion/"
+            payload = json.dumps(data)
+            headers = {
+                'Content-Type': 'application/json'
+            }
+            response = requests.request("POST", url, headers=headers, data=payload)
+            if response.ok:
+                print('OK')
+                return render(request, 'web/index.html', {
+                    'userType' : 'administrador'
+                    })
+            else:
+                print('NO OK')
+                print(response)
+                try:
+                    print(response.raise_for_status())
+                except requests.exceptions.HTTPError as e:
+                    print(e)
+                return HttpResponse('<div><div><H1>Error interno, intente más tarde.</H1></div><div>Respuesta: ${response}</div><div>Error: ${e}</div><div><input class="btn btn-danger" type=button value="Cancelar" onClick="javascript:history.go(-1);"></div></div>')
+        else:
+            print('No es valido')
+            print(form.errors)
+            return HttpResponse('<div><div><H1>Error interno, intente más tarde.</H1></div><div>Error: ${form.errors}</div><div><input class="btn btn-danger" type=button value="Cancelar" onClick="javascript:history.go(-1);"></div></div>')
+    else:
+        return HttpResponse('<div><div><H1>Formulario no válido, intente con nuevos valores.</H1></div><div><input class="btn btn-danger" type=button value="Cancelar" onClick="javascript:history.go(-1);"></div></div>')
+
 # OBTENER TODOS LOS MEDICAMENTOS
 
 # OBTENER UNA PREESCRIPCION

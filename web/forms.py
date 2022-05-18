@@ -33,3 +33,45 @@ class PostNewUser(forms.Form):
     tipoUsuario = forms.CharField(label='tipoUsuario_usuario', max_length=150)
     idCentroMedico = forms.CharField(label='id_centro_medico_usuario', max_length=30)
     password = forms.CharField(label='password_usuario', max_length=30)
+    
+class PostNewPacienteForm(forms.Form):
+    VERDE = 'verde'
+    ROSADO = 'rosado'
+    CELESTE = 'celeste'
+    COLOR_CHOICES = (
+        (VERDE, "verde"),
+        (ROSADO, "rosado"),
+        (CELESTE, "celeste")
+    )
+    rut = forms.CharField(label='rut_paciente', max_length=12)
+    nombre = forms.CharField(label='nombre_paciente', max_length=150)
+    apaterno = forms.CharField(label='apaterno_paciente', max_length=10)
+    amaterno = forms.CharField(label='amaterno_paciente', max_length=50)
+    correo = forms.EmailField(label='correo_paciente', max_length=150)
+    telefono = forms.IntegerField(label='telefono_paciente')
+    fechan = forms.DateField(label='fecha_nacimiento_paciente')
+    color_cif = forms.CharField(label='color_cif_paciente')
+    not_wsp = forms.BooleanField(label='noticiacion_whatsapp_paciente')
+    not_cor = forms.BooleanField(label='noticiacion_correo_paciente')
+    
+class PostNewPrescripcionForm(forms.Form):
+    rutMedico = forms.CharField(label='rut_medico', max_length=12)
+    rutPaciente = forms.CharField(label='rut_paciente', max_length=12)
+    idCentroMedico = forms.CharField(label='id_centro_medico', max_length=100)
+    descripcion = forms.CharField(label='descripcion', max_length=250)
+    duracionTratamiento = forms.CharField(label='duracion_tratamiento', max_length=150)
+    medicamentos = forms.CharField(label='medicamentos')
+    
+    
+# curl -X "POST" "https://conversations.messagebird.com/v1/send" \
+# -H "Authorization: AccessKey HbN2vflvdwndrCNqFkcsAB5Hs" \
+# -H "Content-Type: application/json" \
+# --data '{
+#   "to": "+56976423354",
+#   "from": "e22d1dc8-d9d1-4070-8da8-7d703df148fd",
+#   "type": "text",
+#   "content": {
+#     "text": "¡Prueba de WshatApp!",
+#     "disableUrlPreview": false
+#   }
+# }'

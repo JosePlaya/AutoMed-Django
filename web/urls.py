@@ -51,14 +51,14 @@ urlpatterns = [
     # PERFIL
     path('<str:userType>/perfil/<str:uid>',perfil, name="perfil"),
     # PACIENTES
-    path('pacientes/',pacientes, name="pacientes"),
-    path('pacientes_add/',pacientes_add, name="pacientes_add"),
+    path('<str:userType>/pacientes/',pacientes, name="pacientes"),
+    path('<str:userType>/pacientes_add/',pacientes_add, name="pacientes_add"),
     # PRESCRIPCIONES
-    path('prescripciones/',prescripciones, name="prescripciones"),
-    path('prescripciones_add/',prescripciones_add, name="prescripciones_add"),
-    
+    path('<str:userType>/prescripciones/',prescripciones, name="prescripciones"),
+    path('<str:userType>/prescripciones_add/',prescripciones_add, name="prescripciones_add"),
+    #
     path('<str:userType>/user_add/<str:newUserType>/<str:idCentroMedico>/', user_add, name="user_add"),
-    
+    #
     path('test/',test, name="test"),
     
     # ----------------------------------------------------------------- #
@@ -73,6 +73,7 @@ urlpatterns = [
     path('getUserByType/<str:type>', main_views.getUserByType, name="getUserByType"),
     path('getUser/<str:id>', main_views.getUser, name="getUser"),
     path('getUser_idCentroAtencion/<str:id>', main_views.getUser_idCentroAtencion, name="getUser_idCentroAtencion"),
+    path('getUser_idCentroAtencionYRut/<str:id>', main_views.getUser_idCentroAtencionYRut, name="getUser_idCentroAtencionYRut"),
     path('deleteUsuario/<str:idUsuario>', main_views.deleteUsuario, name="deleteUsuario"),
     
     # MEDICAMENTOS
@@ -81,6 +82,12 @@ urlpatterns = [
     path('getMedicamentos/', main_views.getMedicamentos, name="getMedicamentos"),
     path('getMedicamentosByCentroMedico/<str:idCentroMedico>', main_views.getMedicamentosByCentroMedico, name="getMedicamentosByCentroMedico"),
     path('deleteMedicamento/<str:idMedicamento>', main_views.deleteMedicamento, name="deleteMedicamento"),
+    
+    # PACIENTES
+    path('postNewPaciente/', main_views.postNewPaciente, name="postNewPaciente"),
+    
+    # PRESCRIPCIÓN
+    path('postNewPrescripcion/', main_views.postNewPrescripcion, name="postNewPrescripcion"),
 ]
 
 # EAAKf5vBfUe0BANBju2n6AS0QUjSph0Ik8iTOvCrPWS9AMS08B3jMlZCfMX99dO881ieyIBoxgGyZCrIZAHc27lgvILK4nIi6PJUjmaZBPj5ZC5VZBSEufzG74ZANfXB5K3TNhQ7K7pGHrCyzvIeTzk0hNMdnIO9ZCOG1uuAk65xxxXsJZBrQZAwL2lOEkbap6C0wQmZAHTwQ6AoZCwZDZD

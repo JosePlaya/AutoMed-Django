@@ -2,7 +2,7 @@
 {% block content %}
 
 <section class="content-header">
-    <h1 class="pull-left">Agregar Prescripción</h1>
+    <h1 class="pull-left">Nueva Prescripción</h1>
     <h1 class="pull-right">
     </h1>
 </section>
@@ -11,54 +11,112 @@
         <div class="clearfix"></div>
         <div class="box box-primary">
             <div class="box-body">
-
-              <div class="row">
-                  <div class="col-md-12">
-
-                    <form>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <label for="RUT_MEDICO" class="control-label">Rut Médico</label>
-                                <input id="RUT_MEDICO" class="form-control" required maxlength="100" name="RUT_MEDICO" type="text">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form action="/postNewPrescripcion/" method="POST">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label for="id_rutMedico" class="control-label">Rut Médico</label>
+                                    <input id="id_rutMedico" class="form-control" required maxlength="100" name="rutMedico" type="text" required readonly>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="id_rutPaciente" class="control-label">Rut Paciente</label>
+                                    <input id="id_rutPaciente" class="form-control" required maxlength="100" name="rutPaciente" type="text">
+                                </div>
                             </div>
-                            <div class="col-md-4">
-                                <label for="RUT_PACIENTE" class="control-label">Rut Paciente</label>
-                                <input id="RUT_PACIENTE" class="form-control" required maxlength="100" name="RUT_PACIENTE" type="text">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label for="id_idCentroMedico" class="control-label">Id Centro Médico</label>
+                                    <input id="id_idCentroMedico" class="form-control" required maxlength="100" name="idCentroMedico" type="text" required readonly>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="id_descripcion" class="control-label">Descripción</label>
+                                    <input id="id_descripcion" class="form-control" required maxlength="100" name="descripcion" type="text">
+                                </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <label for="ID_CENTROMENDICO" class="control-label">Id Centro Médico</label>
-                                <input id="ID_CENTROMENDICO" class="form-control" required maxlength="100" name="ID_CENTROMENDICO" type="text">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label for="id_duracionTratamiento" class="control-label">Duración Tratamiento</label>
+                                    <input id="id_duracionTratamiento" class="form-control" required maxlength="100" name="duracionTratamiento" type="text">
+                                </div>
                             </div>
-                            <div class="col-md-4">
-                                <label for="DESCRIPCION" class="control-label">Descripción</label>
-                                <input id="DESCRIPCION" class="form-control" required maxlength="100" name="DESCRIPCION" type="text">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label for="id_medicamentos" class="control-label">Medicamento</label>
+                                    <input id="id_medicamentos" class="form-control" required maxlength="100" name="medicamentos" type="text">
+                                    <fieldset>
+                                        {% for medicamento in medicamentos%}
+                                            <input onclick='handleClick(this);' type="checkbox" value={{medicamento.id}}>{{medicamento.nombre}}<br>
+                                        {% endfor %}
+                                    </fieldset>
+                                </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <label for="MEDICAMENTO" class="control-label">Medicamento</label>
-                                <input id="MEDICAMENTO" class="form-control" required maxlength="100" name="MEDICAMENTO" type="text">
+                            <div class="form-group col-sm-12" style="margin-top: 10px;">
+                                <input class="btn btn-primary" type="submit" value="Guardar">
+                                <a href="{% url 'prescripciones' userType %}" class="btn btn-danger">Cancel</a>
                             </div>
-                            <div class="col-md-4">
-                                <label for="ID_MEDICAMENTO" class="control-label">Medicamento</label>
-                                <input id="ID_MEDICAMENTO" class="form-control" required maxlength="100" name="ID_MEDICAMENTO" type="text">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <label for="DURACION_TRATAMIENTO" class="control-label">Duración Tratamiento</label>
-                                <input id="DURACION_TRATAMIENTO" class="form-control" required maxlength="100" name="DURACION_TRATAMIENTO" type="text">
-                            </div>
-                        </div>
-                        <div class="form-group col-sm-12" style="margin-top: 10px;">
-                            <input class="btn btn-primary" type="submit" value="Guardar">
-                            <a href="{% url 'prescripciones' %" class="btn btn-danger">Cancel</a>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
+<script src="https://www.gstatic.com/firebasejs/9.7.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.7.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.7.0/firebase-auth-compat.js"></script>
+<script type="text/javascript">   
+    import(`../../static/funciones/config.js`).then((data) => {
+        console.log('iniciando...')
+        // Configuración credenciales acceso
+        const firebaseApp = firebase.initializeApp(data.firebaseConfig);
+        const db = firebaseApp.firestore();        
+        //const user = firebase.auth
+
+        firebase.auth().onAuthStateChanged(function(user) {
+            if (user) {
+                // User is signed in.
+                // Se solicitan los datos del id del centro medico
+                $.ajax({
+                    type:'GET',
+                    url:'/getUser_idCentroAtencionYRut/'+user.uid,
+                    success: function(data) {                                           
+                        var d = data.split('/');
+                        document.getElementById('id_idCentroMedico').value = d[0];
+                        document.getElementById('id_rut').value = d[1];
+                    }
+                });
+            } else {
+                // No user is signed in
+                // Se redirige al login
+                window.location.href = "/login"
+            }
+        });
+    });
+
+    function handleClick(cb) {
+        if(cb.checked){
+            const medicamentos = document.getElementById('id_medicamentos').value;
+            console.log(medicamentos);
+            nmedicamento = medicamentos+'[1]'+cb.value;
+            console.log(nmedicamento);
+            document.getElementById('id_medicamentos').value = nmedicamento;
+        }else{
+            const data = document.getElementById('id_medicamentos').value;
+            let medicamentos = data.split('[1]',);
+            var nmedicamento = '';
+            console.log(medicamentos);
+            for(const medicamento in medicamentos){
+                console.log(medicamento);
+                if(medicamento != ''){
+                    if(medicamento != nmedicamento){
+                        nmedicamento = medicamento;
+                    }
+                }
+            }
+        }
+
+    }
+</script>
 {% endblock %}

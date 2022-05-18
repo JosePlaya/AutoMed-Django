@@ -14,61 +14,83 @@
 
               <div class="row">
                   <div class="col-md-12">
-
-                    <form>
+                    <form action="/postNewPaciente/" method="POST">
+                        {% csrf_token %}
                         <div class="row">
                             <div class="col-md-4">
-                                <label for="rut_paciente" class="control-label">Rut</label>
-                                <input id="rut_paciente" class="form-control" required maxlength="100" name="rut_paciente" type="text">
+                                <label for="id_rut_paciente" class="control-label">Rut</label>
+                                <input id="id_rut_paciente" class="form-control" required maxlength="100" name="rut" type="text">
                             </div>
                             <div class="col-md-4">
-                                <label for="nombre_paciente" class="control-label">Nombre</label>
-                                <input id="nombre_paciente" class="form-control" required maxlength="100" name="nombre_paciente" type="text">
+                                <label for="id_nombre_paciente" class="control-label">Nombre</label>
+                                <input id="id_nombre_paciente" class="form-control" required maxlength="100" name="nombre" type="text">
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-4">
-                                <label for="apaterno_paciente" class="control-label">Apellido Paterno</label>
-                                <input id="apaterno_paciente" class="form-control" required maxlength="100" name="apaterno_paciente" type="text">
+                                <label for="id_apaterno_paciente" class="control-label">Apellido Paterno</label>
+                                <input id="id_apaterno_paciente" class="form-control" required maxlength="100" name="apaterno" type="text">
                             </div>
                             <div class="col-md-4">
-                                <label for="amaterno_paciente" class="control-label">Apellido Materno</label>
-                                <input id="amaterno_paciente" class="form-control" required maxlength="100" name="amaterno_paciente" type="text">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <label for="fecha_nacimiento_paciente" class="control-label">Fecha Nacimiento</label>
-                                <input id="fecha_nacimiento_paciente" class="form-control" required maxlength="100" name="fecha_nacimiento_paciente" type="text">
-                            </div>
-                            <div class="col-md-4">
-                                <label for="correo_paciente" class="control-label">Correo Electrónico</label>
-                                <input id="correo_paciente" class="form-control" required maxlength="100" name="correo_paciente" type="text">
+                                <label for="id_amaterno_paciente" class="control-label">Apellido Materno</label>
+                                <input id="id_amaterno_paciente" class="form-control" required maxlength="100" name="amaterno" type="text">
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-4">
-                                <label for="telefono_paciente" class="control-label">Teléfono</label>
-                                <input id="telefono_paciente" class="form-control" required maxlength="100" name="telefono_paciente" type="text">
+                                <label for="id_fecha_nacimiento_paciente" class="control-label">Fecha Nacimiento</label>
+                                <input id="id_fecha_nacimiento_paciente" class="form-control" required maxlength="100" name="fechan" type="date">
                             </div>
                             <div class="col-md-4">
-                                <label for="notificacion_correo " class="control-label">Notificación por Correo</label>
-                                <input id="notificacion_correo " class="form-control" required maxlength="100" name="stock_medicamento" type="text">
+                                <label for="id_correo_paciente" class="control-label">Correo Electrónico</label>
+                                <input id="id_correo_paciente" class="form-control" required maxlength="100" name="correo" type="email">
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-4">
-                                <label for="noticiacion_whatsapp " class="control-label">Notificación por Whatsapp</label>
-                                <input id="noticiacion_whatsapp " class="form-control" required maxlength="100" name="noticiacion_whatsapp " type="text">
+                                <label for="id_telefono_paciente" class="control-label">Teléfono</label>
+                                <input id="id_telefono_paciente" class="form-control" required maxlength="100" name="telefono" type="number">
                             </div>
                             <div class="col-md-4">
-                                <label for="color_cif " class="control-label">Color Cif</label>
-                                <input id="color_cif " class="form-control" required maxlength="100" name="color_cif" type="text">
+                                <div>
+                                    <label for="id_color_cif " class="control-label">Color Cif</label>
+                                </div>
+                                <div>
+                                    <select name="color_cif" id="id_color_cif">
+                                        <option value="verde">Verde</option>
+                                        <option value="rosado">Rosado</option>
+                                        <option value="celeste">Celeste</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div>
+                                    <label for="id_noticiacion_whatsapp_paciente" class="control-label">Notificación por Whatsapp</label>
+                                </div>
+                                <div>
+                                    <select name="not_wsp" id="id_noticiacion_whatsapp_paciente">
+                                        <option value="True">Sí</option>
+                                        <option value="False">No</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div>
+                                    <label for="id_noticiacion_correo_paciente " class="control-label">Notificación por correo</label>
+                                </div>
+                                <div>
+                                    <select name="not_cor" id="id_noticiacion_correo_paciente">
+                                        <option value="True">Sí</option>
+                                        <option value="False">No</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
                         <div class="form-group col-sm-12" style="margin-top: 10px;">
                             <input class="btn btn-primary" type="submit" value="Guardar">
-                            <a href="{% url 'pacientes' %}" class="btn btn-danger">Cancel</a>
+                            <a href="{% url 'pacientes' userType %}" class="btn btn-danger">Cancel</a>
                         </div>
                     </form>
                 </div>
