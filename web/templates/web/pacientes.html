@@ -37,14 +37,14 @@
                                     <td>{{paciente.correo}}</td>
                                     <td>+{{paciente.telefono}}</td>
                                     <td>
-                                        {% if paciente.color_cif != 'verde' %}
-                                        <p style="background: #e2fdf4; color: #0ebd84; font-weight: bold; padding: 15px; border: 2px solid #abecf9; border-radius: 10px; text-align:center;">VERDE</p>
+                                        {% if paciente.color_cif == 'verde' %}
+                                        <p style="background: #e2fdf4; color: #0ebd84; font-weight: bold; padding: 15px; border: 2px solid #0ebd84; border-radius: 10px; text-align:center;">VERDE</p>
                                         {% endif %}
-                                        {% if paciente.color_cif != 'celeste' %}
-                                        <p style="background: #bdf0fa; color: #0c92ac; font-weight: bold; padding: 15px; border: 2px solid #abecf9; border-radius: 10px; text-align:center;">CELESTE</p>
+                                        {% if paciente.color_cif == 'celeste' %}
+                                        <p style="background: #bdf0fa; color: #0c92ac; font-weight: bold; padding: 15px; border: 2px solid #0c92ac; border-radius: 10px; text-align:center;">CELESTE</p>
                                         {% endif %}
                                         {% if paciente.color_cif == 'rosado' %}
-                                        <p style="background: #fcdbe6; color: #f15c8e; font-weight: bold; padding: 15px; border: 2px solid #fac9d9; border-radius: 10px; text-align:center;">ROSADO</p>
+                                        <p style="background: #fcdbe6; color: #f15c8e; font-weight: bold; padding: 15px; border: 2px solid #f15c8e; border-radius: 10px; text-align:center;">ROSADO</p>
                                         {% endif %}
                                     </td>
                                     {% comment %} <td>

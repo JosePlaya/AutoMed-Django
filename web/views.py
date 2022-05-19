@@ -4,13 +4,14 @@ from django.http import Http404
 from django.core import serializers
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
-from .forms import PostNewMedicamentoForm, PostUpdateMedicamentoForm, PostNewUser, PostNewPacienteForm, PostNewPrescripcionForm
+from .forms import PostNewMedicamentoForm, PostUpdateMedicamentoForm, PostNewUser, PostNewPacienteForm, PostNewPrescripcionDatosForm
 from django.shortcuts import render
 #from pyrebase import pyrebase
 
 
 # VARIABLES
 urlAPI = "https://us-central1-automed-cl.cloudfunctions.net/webApi/"
+userID = ""
 
 
 # ---------------------------------------------------------------- #
@@ -33,9 +34,13 @@ def administrador(request, userType):
     return render(request, 'web/administrador.html', {'userType' : userType})
     
 def index(request, userType, uid):
+    userID = request.session.get('userID')
+    if userID is None:
+        userID = uid
+    request.session['num'] = userID
     return render(request, 'web/index.html', {
         'userType' : userType,
-        'uid' : uid
+        'userId' : uid
     })
 
 def perfil(request, userType, uid):
@@ -67,7 +72,14 @@ def medicamentos(request, userType, idCentroMedico):
     return render(request, 'web/medicamentos.html', {
         'userType' : userType,
         'medicamentos' : medicamentos
-        })
+    })
+    
+def medicamentosList(request, userType, idCentroMedico):
+    medicamentos = getMedicamentosByCentroMedico(request, idCentroMedico)
+    return render(request, 'web/medicamentos.html', {
+        'userType' : userType,
+        'medicamentos' : medicamentos
+    })
 
 def medicamentos_add(request, userType):
     return render(request, 'web/medicamentos_add.html', {'userType' : userType})
@@ -140,13 +152,26 @@ def pacientes_add(request, userType):
 
 # PRESCRIPCIONES
 def prescripciones(request, userType):
+    userID = request.session.get('userID')
+    rut = getUserRut(request, "J05ljxsYexc3KBCbCNYgifi5XmN2")
+    prescripciones = getPrescripcionesMedico(rut)
+    print(prescripciones)
     return render(request, 'web/prescripciones.html', {
         'userType' : userType,
+        'prescripciones' : prescripciones
     })
 
 def prescripciones_add(request, userType):
     medicamentos = getMedicamentos()
     return render(request, 'web/prescripciones_add.html', {
+        'userType' : userType,
+        'medicamentos' : medicamentos
+    })
+    
+def prescripciones_add_medicamentos(request, userType, idPost):
+    medicamentos = getMedicamentos()
+    return render(request, 'web/prescripciones_add_medicamentos.html', {
+        'idPost' : idPost,
         'userType' : userType,
         'medicamentos' : medicamentos
     })
@@ -255,6 +280,18 @@ def getUser_idCentroAtencion(request, id):
     response = requests.request("GET", url, headers=headers, data=payload)
     r = response.json()
     return HttpResponse(r['idCentroMedico'])
+
+# OBTENER RUT DE UN USUARIO
+def getUserRut(request, id):
+    print('Iniciando get rut del usuario...')
+    url = urlAPI+"usuario/"+id
+    payload={}
+    headers = {
+        'Content-Type': 'application/json'
+    }
+    response = requests.request("GET", url, headers=headers, data=payload)
+    r = response.json()
+    return r['rut']
 
 # OBTENER INFORMACIÓN DE UN USUARIO
 def getUser_idCentroAtencionYRut(request, id):
@@ -576,11 +613,11 @@ def deleteMedicamento(request, idMedicamento):
 #                    PREESCRIPCIÓN                  \\
 # ------------------------------------------------- \\
 # CREAR NUEVA PRESCRIPCIÓN
-def postNewPrescripcion(request):
+def postNewPrescripcionDatos(request):
     print('Iniciando post new prescripción...')
     if request.method == 'POST':
         # create a form instance and populate it with data from the request:
-        form = PostNewPrescripcionForm(request.POST)
+        form = PostNewPrescripcionDatosForm(request.POST)
         # check whether it's valid:
         if form.is_valid():
             # process the data in form.cleaned_data as required
@@ -589,12 +626,11 @@ def postNewPrescripcion(request):
                 "rutPaciente": form.cleaned_data['rutPaciente'],
                 "idCentroMedico": form.cleaned_data['idCentroMedico'],
                 "descripcion": form.cleaned_data['descripcion'],
-                "duracionTratamiento": form.cleaned_data['duracionTratamiento'],
-                "medicamentos": form.cleaned_data['medicamentos']
+                "duracionTratamiento": form.cleaned_data['duracionTratamiento']
             }
             
             print(data)
-            url = urlAPI+"prescripcion/"
+            url = urlAPI+"prescipcion-d/"
             payload = json.dumps(data)
             headers = {
                 'Content-Type': 'application/json'
@@ -602,12 +638,17 @@ def postNewPrescripcion(request):
             response = requests.request("POST", url, headers=headers, data=payload)
             if response.ok:
                 print('OK')
-                return render(request, 'web/index.html', {
-                    'userType' : 'administrador'
-                    })
+                jsonR = json.loads(response.text)
+                print(jsonR['key'])
+                medicamentos = getMedicamentos()
+                return render(request, 'web/prescripciones_add_medicamentos.html', {
+                    'idPost' : jsonR['key'],
+                    'userType' : 'medico',
+                    'medicamentos' : medicamentos
+                })
             else:
                 print('NO OK')
-                print(response)
+                print(response.text)
                 try:
                     print(response.raise_for_status())
                 except requests.exceptions.HTTPError as e:
@@ -619,10 +660,39 @@ def postNewPrescripcion(request):
             return HttpResponse('<div><div><H1>Error interno, intente más tarde.</H1></div><div>Error: ${form.errors}</div><div><input class="btn btn-danger" type=button value="Cancelar" onClick="javascript:history.go(-1);"></div></div>')
     else:
         return HttpResponse('<div><div><H1>Formulario no válido, intente con nuevos valores.</H1></div><div><input class="btn btn-danger" type=button value="Cancelar" onClick="javascript:history.go(-1);"></div></div>')
+    
+# CREAR NUEVA PRESCRIPCIÓN
+def postNewPrescripcionMedicamentos(idPrescripcion, medicamentos):
+    print('Iniciando post new prescripción2...')
+    url = urlAPI+"prescipcion-m/"+idPrescripcion
+    payload = json.dumps(medicamentos)
+    headers = {
+        'Content-Type': 'application/json'
+    }
+    response = requests.request("POST", url, headers=headers, data=payload)
+    if response.ok:
+        print('OK')
 
-# OBTENER TODOS LOS MEDICAMENTOS
+    else:
+        print('NO OK')
+        print(response.text)
+        try:
+            print(response.raise_for_status())
+        except requests.exceptions.HTTPError as e:
+            print(e)
+        return HttpResponse('<div><div><H1>Error interno, intente más tarde.</H1></div><div>Respuesta: ${response}</div><div>Error: ${e}</div><div><input class="btn btn-danger" type=button value="Cancelar" onClick="javascript:history.go(-1);"></div></div>')
+    
 
-# OBTENER UNA PREESCRIPCION
+# OBTENER TODASS LAS PRESCRIPCIONES DE UN MEDICO
+def getPrescripcionesMedico(rutMedico):
+    print('Iniciando get prescripciones (medico)...'+rutMedico)
+    url = urlAPI+"prescipciones/medico/"+rutMedico
+    payload={}
+    headers = {}
+    response = requests.request("GET", url, headers=headers, data=payload)
+    return response.json()
+
+# OBTENER TODASS LAS PRESCRIPCIONES DE UN MEDICO
 
 # CREAR NUEVO MEDICAMENTOS
 

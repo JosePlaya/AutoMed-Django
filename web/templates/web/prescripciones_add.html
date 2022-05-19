@@ -3,8 +3,9 @@
 
 <section class="content-header">
     <h1 class="pull-left">Nueva Prescripción</h1>
-    <h1 class="pull-right">
-    </h1>
+    <h1 class="pull-right"></h1>
+    <h4 class="pull-left">Añadir Datos</h4>
+    <h4 class="pull-right"></h4>
 </section>
 <div class="content">
     <div class="content">
@@ -13,7 +14,7 @@
             <div class="box-body">
                 <div class="row">
                     <div class="col-md-12">
-                        <form action="/postNewPrescripcion/" method="POST">
+                        <form action="/postNewPrescripcionDatos/" method="POST">
                             {% csrf_token %}
                             <div class="row">
                                 <div class="col-md-4">
@@ -41,20 +42,9 @@
                                     <input id="id_duracionTratamiento" class="form-control" required maxlength="100" name="duracionTratamiento" type="text">
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <label for="id_medicamentos" class="control-label">Medicamento</label>
-                                    <input id="id_medicamentos" class="form-control" required maxlength="100" name="medicamentos" type="text">
-                                    <fieldset>
-                                        {% for medicamento in medicamentos%}
-                                            <input onclick='handleClick(this);' type="checkbox" value={{medicamento.id}}>{{medicamento.nombre}}<br>
-                                        {% endfor %}
-                                    </fieldset>
-                                </div>
-                            </div>
                             <div class="form-group col-sm-12" style="margin-top: 10px;">
-                                <input class="btn btn-primary" type="submit" value="Guardar">
-                                <a href="{% url 'prescripciones' userType %}" class="btn btn-danger">Cancel</a>
+                                <input class="btn btn-primary" type="submit" value="Añadir Medicamentos">
+                                <a href="{% url 'prescripciones' userType %}" class="btn btn-danger">Cancelar</a>
                             </div>
                         </form>
                     </div>
@@ -71,9 +61,7 @@
         console.log('iniciando...')
         // Configuración credenciales acceso
         const firebaseApp = firebase.initializeApp(data.firebaseConfig);
-        const db = firebaseApp.firestore();        
-        //const user = firebase.auth
-
+        
         firebase.auth().onAuthStateChanged(function(user) {
             if (user) {
                 // User is signed in.
@@ -81,10 +69,10 @@
                 $.ajax({
                     type:'GET',
                     url:'/getUser_idCentroAtencionYRut/'+user.uid,
-                    success: function(data) {                                           
+                    success: function(data) {               
                         var d = data.split('/');
                         document.getElementById('id_idCentroMedico').value = d[0];
-                        document.getElementById('id_rut').value = d[1];
+                        document.getElementById('id_rutMedico').value = d[1];
                     }
                 });
             } else {
@@ -94,29 +82,5 @@
             }
         });
     });
-
-    function handleClick(cb) {
-        if(cb.checked){
-            const medicamentos = document.getElementById('id_medicamentos').value;
-            console.log(medicamentos);
-            nmedicamento = medicamentos+'[1]'+cb.value;
-            console.log(nmedicamento);
-            document.getElementById('id_medicamentos').value = nmedicamento;
-        }else{
-            const data = document.getElementById('id_medicamentos').value;
-            let medicamentos = data.split('[1]',);
-            var nmedicamento = '';
-            console.log(medicamentos);
-            for(const medicamento in medicamentos){
-                console.log(medicamento);
-                if(medicamento != ''){
-                    if(medicamento != nmedicamento){
-                        nmedicamento = medicamento;
-                    }
-                }
-            }
-        }
-
-    }
 </script>
 {% endblock %}

@@ -8,7 +8,7 @@ from .views import centros_medicos, centros_medicos_add
 from .views import farmaceuticos, administradores
 from .views import medicos
 from .views import pacientes, pacientes_add
-from .views import prescripciones, prescripciones_add
+from .views import prescripciones, prescripciones_add, postNewPrescripcionDatos, prescripciones_add_medicamentos
 
 
 urlpatterns = [
@@ -56,6 +56,7 @@ urlpatterns = [
     # PRESCRIPCIONES
     path('<str:userType>/prescripciones/',prescripciones, name="prescripciones"),
     path('<str:userType>/prescripciones_add/',prescripciones_add, name="prescripciones_add"),
+    path('<str:userType>/prescripciones_add_medicamentos/<str:idPost>/',prescripciones_add_medicamentos, name="prescripciones_add_medicamentos"),
     #
     path('<str:userType>/user_add/<str:newUserType>/<str:idCentroMedico>/', user_add, name="user_add"),
     #
@@ -87,7 +88,7 @@ urlpatterns = [
     path('postNewPaciente/', main_views.postNewPaciente, name="postNewPaciente"),
     
     # PRESCRIPCIÓN
-    path('postNewPrescripcion/', main_views.postNewPrescripcion, name="postNewPrescripcion"),
+    path('postNewPrescripcionDatos/', main_views.postNewPrescripcionDatos, name="postNewPrescripcionDatos"),
 ]
 
 # EAAKf5vBfUe0BANBju2n6AS0QUjSph0Ik8iTOvCrPWS9AMS08B3jMlZCfMX99dO881ieyIBoxgGyZCrIZAHc27lgvILK4nIi6PJUjmaZBPj5ZC5VZBSEufzG74ZANfXB5K3TNhQ7K7pGHrCyzvIeTzk0hNMdnIO9ZCOG1uuAk65xxxXsJZBrQZAwL2lOEkbap6C0wQmZAHTwQ6AoZCwZDZD

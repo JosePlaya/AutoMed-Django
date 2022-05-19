@@ -15,11 +15,12 @@
               <div class="row">
                     <div class="col-md-12">
                         <table id="table_id" class="display">
+                            <!-- ENCABEZADO -->
                             <thead>
                                 <tr>
-                                    <th>Rut Médico</th>
                                     <th>Rut Paciente</th>
                                     <th>Medicamentos</th>
+                                    <th>Descripción</th>
                                     <th>Duración Tratamiento</th>
                                     <th>Acción</th>
                                 </tr>
@@ -29,29 +30,24 @@
                             <tbody>
                                 {%for prescripcion in prescripciones %}
                                 <tr>
-                                    <td>{{prescripcion.rutMedico}}</td>
                                     <td>{{prescripcion.rutPaciente}}</td>
                                     <td>
                                         <!-- BTN MEDICAMENTOS -->
-                                        <a href="{% url 'medicamentos_list' userType prescripcion.id %}" class='btn btn-info' style="margin-top:5px; margin-bottom:5px"><i class="fas fa-edit"></i></a>
+                                        <a href="#" class='btn btn-info' style="margin-top:5px; margin-bottom:5px"><i class="fa-solid fa-eye"></i>VER</a>
                                     </td>
-                                    <td>{{prescripcion.nombre}}</td>
-                                    <td>{{prescripcion.codigo}}</td>
                                     <td>{{prescripcion.descripcion}}</td>
-                                    <td>{{prescripcion.fabricante}}</td>
-                                    <td>{{prescripcion.contenido}}</td>
-                                    <td>{{prescripcion.cantidad}}</td>
-                                    <td>{{prescripcion.gramos}}</td>
-                                    <td>{{prescripcion.stock}}</td>
+                                    <td>{{prescripcion.duracionTratamiento}}</td>
                                     <td>
                                         <center>
-                                            <!-- BTN EDITAR -->
-                                            <a href="{% url 'medicamentos_edit' userType medicamento.id %}" class='btn btn-info' style="margin-top:5px; margin-bottom:5px"><i class="fas fa-edit"></i></a>
+                                            {% if userType == 'farmaceutico' %}
+                                            <!-- BTN ENTREGAR -->
+                                            <a href="#" class='btn btn-info' style="margin-top:5px; margin-bottom:5px"><i class="fa-solid fa-check"></i></a>
                                             <!-- BTN ELIMINAR -->
-                                            <form action="{% url 'deleteMedicamento' medicamento.id %}" method="post">
+                                            <form action="#" method="post">
                                                 {% csrf_token %}
-                                                <button type="submit" class="btn btn-danger" onclick="return confirm('¿Estas seguro que deseas eliminar el registro?')" margin="2px"> <i class="fas fa-times-circle"></i> </button>
+                                                <button type="submit" class="btn btn-danger" onclick="return confirm('¿Estas seguro que deseas eliminar el registro?')" margin="2px"> <i class="fa-solid fa-xmark"></i> </button>
                                             </form>
+                                            {% endif %}
                                         </center>
                                     </td>
                                 </tr>
@@ -59,6 +55,7 @@
                             </tbody>
                         </table>
                     </div> 
+                </div>
             </div>
         </div>
     </div>

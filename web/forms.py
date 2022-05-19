@@ -54,13 +54,12 @@ class PostNewPacienteForm(forms.Form):
     not_wsp = forms.BooleanField(label='noticiacion_whatsapp_paciente')
     not_cor = forms.BooleanField(label='noticiacion_correo_paciente')
     
-class PostNewPrescripcionForm(forms.Form):
+class PostNewPrescripcionDatosForm(forms.Form):
     rutMedico = forms.CharField(label='rut_medico', max_length=12)
     rutPaciente = forms.CharField(label='rut_paciente', max_length=12)
     idCentroMedico = forms.CharField(label='id_centro_medico', max_length=100)
     descripcion = forms.CharField(label='descripcion', max_length=250)
     duracionTratamiento = forms.CharField(label='duracion_tratamiento', max_length=150)
-    medicamentos = forms.CharField(label='medicamentos')
     
     
 # curl -X "POST" "https://conversations.messagebird.com/v1/send" \
