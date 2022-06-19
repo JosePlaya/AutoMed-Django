@@ -94,7 +94,7 @@
                   </a>
                 </li>
               </ul>
-            </li>
+            </li> 
 
             <li class="nav-item has-treeview menu-open">
               <a href="#" class="nav-link">
@@ -237,6 +237,28 @@
   <div class="content-wrapper">
     <!-- CONTENT TAG -->
     {% block content %}
+      {% if content is null%}
+        <!-- Bienvenida -->
+        <div class="container p-3 my-3 border">
+          <div class="row">
+            <div class="col">          
+              <img src="{% static 'dist/img/cesfam.png' %}" width="100" alt="100">
+              <h6>Centros de Salud Familiar</h6>    
+            </div>
+          </div>
+  
+          <br>
+          <div class="row" align="center">
+            <div class="col" align="center">
+              <h1 class="fw-bold text-center">¡Bienvenido de nuevo!</h1>
+              <h5 class="fw-bold text-center">En el menú de la izquierda encontrarás las acciones que puedes realizar.</h5>
+              <br>
+              <br>                       
+            </div>
+          </div>    
+      </div>
+        <!-- /.bienvenida -->
+      {% endif %}
     {% endblock %}
   </div>
 
@@ -245,6 +267,7 @@
     <!-- Control sidebar content goes here -->
   </aside>
   <!-- /.control-sidebar -->
+
 </div>
 <!-- ./wrapper -->
 
