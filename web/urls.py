@@ -89,6 +89,7 @@ urlpatterns = [
     
     # PRESCRIPCIÓN
     path('postNewPrescripcionDatos/', main_views.postNewPrescripcionDatos, name="postNewPrescripcionDatos"),
+    path('postNewPrescripcionMedicamentos/<str:idPrescripcion>/<str:medicamentos>', main_views.postNewPrescripcionMedicamentos, name="postNewPrescripcionMedicamentos"),
 ]
 
 # EAAKf5vBfUe0BANBju2n6AS0QUjSph0Ik8iTOvCrPWS9AMS08B3jMlZCfMX99dO881ieyIBoxgGyZCrIZAHc27lgvILK4nIi6PJUjmaZBPj5ZC5VZBSEufzG74ZANfXB5K3TNhQ7K7pGHrCyzvIeTzk0hNMdnIO9ZCOG1uuAk65xxxXsJZBrQZAwL2lOEkbap6C0wQmZAHTwQ6AoZCwZDZD

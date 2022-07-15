@@ -152,8 +152,8 @@ def pacientes_add(request, userType):
 
 # PRESCRIPCIONES
 def prescripciones(request, userType):
-    userID = request.session.get('userID')
-    rut = getUserRut(request, "J05ljxsYexc3KBCbCNYgifi5XmN2")
+    # userID = request.session.get('userID')
+    rut = getUserRut(request, "zcK99QFm6AXGkEB3LX30YqFLeTP2")
     prescripciones = getPrescripcionesMedico(rut)
     print(prescripciones)
     return render(request, 'web/prescripciones.html', {
@@ -662,16 +662,33 @@ def postNewPrescripcionDatos(request):
         return HttpResponse('<div><div><H1>Formulario no válido, intente con nuevos valores.</H1></div><div><input class="btn btn-danger" type=button value="Cancelar" onClick="javascript:history.go(-1);"></div></div>')
     
 # CREAR NUEVA PRESCRIPCIÓN
-def postNewPrescripcionMedicamentos(idPrescripcion, medicamentos):
-    print('Iniciando post new prescripción2...')
-    url = urlAPI+"prescipcion-m/"+idPrescripcion
-    payload = json.dumps(medicamentos)
+def postNewPrescripcionMedicamentos(request, idPrescripcion, medicamentos):
+    print('Iniciando post new prescripción2...', medicamentos)
+    # url = urlAPI+"prescipcion-m/"+idPrescripcion
+    url = "http://localhost:5001/automed-cl/us-central1/webApi/prescipcion-m/"+idPrescripcion
+    
+    # split medicamentos by "&"
+    params = medicamentos.split("&")
+    
+    # crear JSON con los datos del medicamento y cantidad
+    jsonstr = []
+    for p in params:
+        data = p.split("=")
+        m = {
+            "id": data[0],
+            "cantidad": data[1]
+        }
+        jsonstr.append(m)
+    
+    payload = json.dumps(jsonstr)
+    print(payload)
     headers = {
         'Content-Type': 'application/json'
     }
     response = requests.request("POST", url, headers=headers, data=payload)
     if response.ok:
         print('OK')
+        return HttpResponse('true')
 
     else:
         print('NO OK')
@@ -680,7 +697,7 @@ def postNewPrescripcionMedicamentos(idPrescripcion, medicamentos):
             print(response.raise_for_status())
         except requests.exceptions.HTTPError as e:
             print(e)
-        return HttpResponse('<div><div><H1>Error interno, intente más tarde.</H1></div><div>Respuesta: ${response}</div><div>Error: ${e}</div><div><input class="btn btn-danger" type=button value="Cancelar" onClick="javascript:history.go(-1);"></div></div>')
+        return HttpResponse('false')
     
 
 # OBTENER TODASS LAS PRESCRIPCIONES DE UN MEDICO

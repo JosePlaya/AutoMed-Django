@@ -4,7 +4,7 @@
 <section class="content-header">
     <h1 class="pull-left">Nueva Prescripción</h1>
     <h1 class="pull-right">
-    <h4 class="pull-left">Añadir Medicamentos</h4>
+    <h5 class="pull-left">Añadir Medicamentos</h5>
     <h4 class="pull-right"></h4>
     </h1>
 </section>
@@ -13,18 +13,56 @@
         <div class="clearfix"></div>
         <div class="box box-primary">
             <div class="box-body">
-              <div class="row">
+                <div class="row">
                     <div class="col-md-12">
                         <table id="table_id" class="display">
+                        <!-- ENCABEZADO TABLA -->
+                        <thead>
+                            <tr>
+                                <th>En Receta</th>
+                                <th>Nombre</th>
+                                <th>Fabricante</th>
+                                <th>Contenido</th>
+                                <th>Cantidad</th>
+                                <th>Gramaje</th>
+                            </tr>
+                        </thead>
+                        
+                        <!-- CUERPO TABLA -->
+                        <tbody>
+                            {%for medicamento in medicamentos %}
+                            <tr>
+                                <center>
+                                    <td>
+                                        <input type="checkbox" id="checkbox" onchange="addMedicamento('{{medicamento.id}}')" color: transparent;></input>
+                                    </td>
+                                </center>
+                                <td>{{medicamento.nombre}}</td>
+                                <td>{{medicamento.fabricante}}</td>
+                                <td>{{medicamento.contenido}}</td>
+                                <td>{{medicamento.cantidad}}</td>
+                                <td>{{medicamento.gramaje}}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                        </table>
+                        <div class="form-group col-sm-12" style="margin-top: 10px;">
+                            <button onclick="createPrescripcion('{{idPost}}')" class="btn btn-primary">Crear Prescripción</button>
+                            <button onclick="deletePrescripcion('{{idPost}}')" class="btn btn-danger">Cancelar</button>
+                        </div>
+                    </div>
+
+                    {% comment %} <div class="col-md-4">
+                        <div class="form-group col-sm-4" style="margin-top: 10px;">
+                            <h4 class="pull-left">Medicamentos añadidos</h4>
+                            <h4 class="pull-right"></h4>
+                        </div>
+                        <div class="col-md-4">
+                            <table id="table_id" class="display">
                             <!-- ENCABEZADO TABLA -->
                             <thead>
                                 <tr>
-                                    <th>En Receta</th>
                                     <th>Nombre</th>
-                                    <th>Fabricante</th>
-                                    <th>Contenido</th>
-                                    <th>Cantidad</th>
-                                    <th>Gramaje</th>
                                 </tr>
                             </thead>
                             
@@ -32,25 +70,17 @@
                             <tbody>
                                 {%for medicamento in medicamentos %}
                                 <tr>
-                                    <center>
-                                        <td>
-                                            <input type="checkbox" id="checkbox" onchange="addMedicamento('{{medicamento.id}}')" color: transparent;></input>
-                                        </td>
-                                    </center>
                                     <td>{{medicamento.nombre}}</td>
-                                    <td>{{medicamento.fabricante}}</td>
-                                    <td>{{medicamento.contenido}}</td>
-                                    <td>{{medicamento.cantidad}}</td>
-                                    <td>{{medicamento.gramaje}}</td>
                                 </tr>
                                 {% endfor %}
                             </tbody>
-                        </table>
-                        <div class="form-group col-sm-12" style="margin-top: 10px;">
-                            <button onclick="createPrescripcion('{{userType}}')" class="btn btn-primary">Crear Prescripción</button>
-                            <button onclick="deletePrescripcion('{{idPost}}')" class="btn btn-danger">Cancelar</button>
+                            </table>
+                            <div class="form-group col-sm-4" style="margin-top: 10px;">
+                                <button onclick="createPrescripcion('{{userType}}')" class="btn btn-primary">Crear Prescripción</button>
+                                <button onclick="deletePrescripcion('{{idPost}}')" class="btn btn-danger">Cancelar</button>
+                            </div>
                         </div>
-                    </div>
+                    </div> {% endcomment %}
                 </div>
             </div>
         </div>
@@ -78,36 +108,37 @@
         }
     }
 
-    function createPrescripcion(userType, ){
+    function createPrescripcion(idPost){
         if(medicamentos.length !=0){
             console.log('Creando...');
+            console.log(medicamentos);
+            // Convertir a params para url
+            // Formato: [medicamentos]&[medicamentos] 
+            var params = ""
+            medicamentos.forEach((medicamento) => {
+                console.log(medicamento);
+                if(params == ""){
+                    params = ""+medicamento+"=1"
+                }else{
+                    params = params+"&"+medicamento+"=1"
+                }
+            })
 
-            {% comment %} var myJsonString = JSON.stringify(medicamentos);
-            console.log(myJsonString); {% endcomment %}
-
-            {% comment %} var myHeaders = new Headers();
-            myHeaders.append("Content-Type", "application/json");
-
-            var raw = JSON.stringify(medicamentos);
-
-            var requestOptions = {
-            method: 'POST',
-            headers: myHeaders,
-            body: raw,
-            redirect: 'follow'
-            };
-
-            fetch("https://us-central1-automed-cl.cloudfunctions.net/webApi/prescipcion-m/"+id, requestOptions)
-            .then(response => response.text())
-            .then(result => console.log(result))
-            .catch(error => console.log('error', error)); {% endcomment %}
-
-            var PAGE_URL = "{% url 'index' userType 'zcK99QFm6AXGkEB3LX30YqFLeTP2' %}"
-            window.location.replace(PAGE_URL)
+            $.ajax({
+                type:'GET',
+                url:'/postNewPrescripcionMedicamentos/'+idPost+'/'+params,
+                success: function(data) {               
+                    if(data == "true"){
+                        var PAGE_URL = "{% url 'index' userType 'zcK99QFm6AXGkEB3LX30YqFLeTP2' %}"
+                        window.location.replace(PAGE_URL)
+                    }
+                }
+            });
         }
     }
 
     function deletePrescripcion(idPost){
+        medicamentos = null;
         console.log('Eliminando...'+idPost);
     }
 </script>

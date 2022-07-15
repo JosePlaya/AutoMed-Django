@@ -11,66 +11,68 @@
         <div class="clearfix"></div>
         <div class="box box-primary">
             <div class="box-body">
-
-              <div class="row">
-                  <div class="col-md-12">
-                    <form action="/postNewMedicamento/" method="POST">
-                        {% csrf_token %}
-                        <div class="row">
-                            <div class="col-md-4">
-                                <label for="id_nombre" class="control-label">Nombre</label>
-                                <input id="id_nombre" class="form-control" maxlength="100" name="nombre" type="text" required>
+                <div class="row">
+                    <div class="col-md-12">
+                        <form action="/postNewMedicamento/" method="POST">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label for="id_nombre" class="control-label">Nombre</label>
+                                    <input id="id_nombre" class="form-control" maxlength="100" name="nombre" type="text" required>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="id_codigo" class="control-label">Código</label>
+                                    <input id="id_codigo" class="form-control" maxlength="100" name="codigo" type="text" required>
+                                </div>
                             </div>
-                            <div class="col-md-4">
-                                <label for="id_codigo" class="control-label">Código</label>
-                                <input id="id_codigo" class="form-control" maxlength="100" name="codigo" type="text" required>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label for="id_descripcion" class="control-label">Descripción</label>
+                                    <input id="id_descripcion" class="form-control" maxlength="100" name="descripcion" type="text" required>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="id_fabricante" class="control-label">Fabricante</label>
+                                    <input id="id_fabricante" class="form-control" maxlength="100" name="fabricante" type="text" required>
+                                </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <label for="id_descripcion" class="control-label">Descripción</label>
-                                <input id="id_descripcion" class="form-control" maxlength="100" name="descripcion" type="text" required>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label for="id_contenido" class="control-label">Contenido</label>
+                                    <input id="id_contenido" class="form-control" maxlength="100" name="contenido" type="text" required>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="id_cantidad" class="control-label">Cantidad</label>
+                                    <input id="id_cantidad" class="form-control" maxlength="100" name="cantidad" type="text" required>
+                                </div>
                             </div>
-                            <div class="col-md-4">
-                                <label for="id_fabricante" class="control-label">Fabricante</label>
-                                <input id="id_fabricante" class="form-control" maxlength="100" name="fabricante" type="text" required>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label for="id_gramaje" class="control-label">Gramaje</label>
+                                    <input id="id_gramaje" class="form-control" maxlength="100" name="gramaje" type="text"required>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="id_stock" class="control-label">Stock</label>
+                                    <input id="id_stock" class="form-control" maxlength="100" name="stock" type="number" required>
+                                </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <label for="id_contenido" class="control-label">Contenido</label>
-                                <input id="id_contenido" class="form-control" maxlength="100" name="contenido" type="text" required>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label for="id_idCentroMedico" class="control-label">ID Centro médico</label>
+                                    <input id="id_idCentroMedico"class="form-control" type="text" name="idCentroMedico" maxlength="30" required readonly>
+                                </div>
                             </div>
-                            <div class="col-md-4">
-                                <label for="id_cantidad" class="control-label">Cantidad</label>
-                                <input id="id_cantidad" class="form-control" maxlength="100" name="cantidad" type="text" required>
+                            <div class="form-group col-sm-12" style="margin-top: 10px;">
+                                <input class="btn btn-primary" type="submit" value="Guardar"  name="postNewMedicamentoForm" maxlength="1000" required id="id_postNewMedicamentoForm">
+                                <input class="btn btn-danger" type=button value="Cancelar" onClick="javascript:history.go(-1);">
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <label for="id_gramaje" class="control-label">Gramaje</label>
-                                <input id="id_gramaje" class="form-control" maxlength="100" name="gramaje" type="text"required>
-                            </div>
-                            <div class="col-md-4">
-                                <label for="id_stock" class="control-label">Stock</label>
-                                <input id="id_stock" class="form-control" maxlength="100" name="stock" type="number" required>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <label for="id_idCentroMedico" class="control-label">ID Centro médico</label>
-                                <input id="id_idCentroMedico"class="form-control" type="text" name="idCentroMedico" maxlength="30" required readonly>
-                            </div>
-                        </div>
-                        <div class="form-group col-sm-12" style="margin-top: 10px;">
-                            <input class="btn btn-primary" type="submit" value="Guardar"  name="postNewMedicamentoForm" maxlength="1000" required id="id_postNewMedicamentoForm">
-                            <input class="btn btn-danger" type=button value="Cancelar" onClick="javascript:history.go(-1);">
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
+
     <script src="https://www.gstatic.com/firebasejs/9.7.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.7.0/firebase-firestore-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.7.0/firebase-auth-compat.js"></script>
